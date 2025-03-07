@@ -1,4 +1,4 @@
-import random
+import secrets
 
 # EMOJI
 
@@ -65,7 +65,7 @@ def hex_to_boar_emoji(hex_string):
     boar_emoji_string = ''
     for char in hex_string:
         emojis = boar_emoji_dict.get(char, [char])
-        selected_emoji = random.choice(emojis)
+        selected_emoji = secrets.choice(emojis)
         boar_emoji_string += selected_emoji
     return boar_emoji_string
 
