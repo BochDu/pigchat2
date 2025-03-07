@@ -25,7 +25,9 @@ def adjust_password_entry_width():
     if entry_width > 0:
         password_entry.config(width=entry_width)
 
+# 创建主窗口并隐藏
 root = tk.Tk()
+root.withdraw()
 root.title("PigChat")
 # 设置窗口最小尺寸
 root.minsize(500, 300)
@@ -42,6 +44,10 @@ top_frame.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
 try:
     # 请确保你有对应的野猪图片文件，这里假设图片名为 wild_boar.png 且与代码文件在同一目录
     img = tk.PhotoImage(file="wild_boar.png")
+    img_width = img.width()
+    img_height = img.height()
+    # 根据图片大小调整窗口初始大小
+    root.geometry(f"{max(500, img_width + 200)}x{max(300, img_height + 200)}")
 except tk.TclError:
     print("未能找到或加载图片，请检查图片文件路径和格式。")
     img = None
@@ -54,7 +60,7 @@ if img:
 
 # 密码输入框框架
 password_frame = tk.Frame(top_frame, bg="#f0f0f0")
-password_frame.pack(side=tk.RIGHT, padx=10)
+password_frame.pack(side=tk.RIGHT, padx=0)
 
 # 添加标题标签
 title_label = tk.Label(password_frame, text="start a new encrypted chat", font=("Arial", 14, "bold"), bg="#f0f0f0", wraplength=password_frame.winfo_width())
@@ -78,8 +84,13 @@ def on_window_resize(event):
 # 绑定窗口大小改变事件
 root.bind("<Configure>", on_window_resize)
 
-# 在窗口更新后调用调整宽度的函数
-root.update_idletasks()
+# 动态调整密码输入框宽度
 adjust_password_entry_width()
+
+# 强制 Tkinter 完成布局计算
+root.update_idletasks()
+
+# 显示窗口
+root.deiconify()
 
 root.mainloop()
