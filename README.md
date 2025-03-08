@@ -1,17 +1,23 @@
 # 野猪聊天2
 
-## 工程目录
+安全聊天、猪言猪语、当日有效
 
-### DEMO
+## 仓库目录
+### package
+> win平台：`PigChat.exe`
+### project_pigchat
+> DEMO
 - `gui_pigchat.py`: PigChat GUI
 
-### 加密模块
+> 加密模块
 - `core_pigchat.py`: 野猪聊天转换
 - `core_pignum.py`: HEX编码加密
 - `core_pigtime.py`: 野猪时间戳
 - `hexmap.py`: HEX乱序表
 - `pigemoji.py`: 野猪Emoji字典
 - `seed.py`: 随机种子制作
+
+### project_pigchat_flask
 
 ## 野猪加密流程
 
