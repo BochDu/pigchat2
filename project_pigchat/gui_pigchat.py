@@ -1,10 +1,16 @@
-import tkinter as tk
-import core_pigchat
-import core_pigtime
-import pigemoji
 import sys
 import os
+import tkinter as tk
 import ctypes
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+from core import pigchat
+from core import pigtime
+from core import pigemoji
+
 
 try:
     # 任意唯一标识符
@@ -17,12 +23,12 @@ except Exception as e:
 
 
 def toggle_encrypt_decrypt():
-    timestamp = core_pigtime.get_pig_timestamp()
+    timestamp = pigtime.get_pig_timestamp()
     input_text = entry.get("1.0", tk.END).strip()
     if pigemoji.check_no_emoji_string(input_text):
-        output_text = core_pigchat.utf8_to_emoji(input_text, timestamp, password=password_var.get())
+        output_text = pigchat.utf8_to_emoji(input_text, timestamp, password=password_var.get())
     elif pigemoji.check_emoji_string(input_text):
-        output_text = core_pigchat.emoji_to_utf8(input_text, timestamp, password=password_var.get())
+        output_text = pigchat.emoji_to_utf8(input_text, timestamp, password=password_var.get())
     else:
         output_text = input_text
     entry.delete("1.0", tk.END)
