@@ -18,6 +18,17 @@
 - `seed.py`: 随机种子制作
 
 ### project_pigchat_flask
+> API
+- `pigchat_server.py`:野猪聊天HTTP服务端
+- `pigchat_server.md`:野猪聊天HTTP协议
+
+> 加密模块
+- `core_pigchat.py`: 野猪聊天转换
+- `core_pignum.py`: HEX编码加密
+- `core_pigtime.py`: 野猪时间戳
+- `hexmap.py`: HEX乱序表
+- `pigemoji.py`: 野猪Emoji字典
+- `seed.py`: 随机种子制作
 
 ## 野猪加密流程
 
