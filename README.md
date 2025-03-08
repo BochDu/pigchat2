@@ -16,7 +16,7 @@
 - `PigChat.exe` (Windows平台)
 
 ### project_pigchat
-- `gui_pigchat.py`: PigChat GUI演示
+- `pigchat_gui.py`: PigChat GUI演示
 
 ### project_pigchat_flask
 - API
