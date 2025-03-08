@@ -3,32 +3,25 @@
 安全聊天、猪言猪语、当日有效
 
 ## 仓库目录
-### package
-> win平台：`PigChat.exe`
-### project_pigchat
-> DEMO
-- `gui_pigchat.py`: PigChat GUI
 
-> 加密模块
-- `core_pigchat.py`: 野猪聊天转换
-- `core_pignum.py`: HEX编码加密
-- `core_pigtime.py`: 野猪时间戳
+### core
+- `pigchat.py`: 野猪聊天转换
+- `pignum.py`: HEX编码加密
+- `pigtime.py`: 野猪时间戳
 - `hexmap.py`: HEX乱序表
 - `pigemoji.py`: 野猪Emoji字典
 - `seed.py`: 随机种子制作
+
+### package
+- `PigChat.exe` (Windows平台)
+
+### project_pigchat
+- `gui_pigchat.py`: PigChat GUI演示
 
 ### project_pigchat_flask
-> API
-- `pigchat_server.py`:野猪聊天HTTP服务端
-- `pigchat_server.md`:野猪聊天HTTP协议
-
-> 加密模块
-- `core_pigchat.py`: 野猪聊天转换
-- `core_pignum.py`: HEX编码加密
-- `core_pigtime.py`: 野猪时间戳
-- `hexmap.py`: HEX乱序表
-- `pigemoji.py`: 野猪Emoji字典
-- `seed.py`: 随机种子制作
+- API
+  - `pigchat_server.py`: 野猪聊天HTTP服务
+  - `pigchat_server.md`: 野猪聊天HTTP协议
 
 ## 野猪加密流程
 
