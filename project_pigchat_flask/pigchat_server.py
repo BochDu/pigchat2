@@ -8,7 +8,6 @@ sys.path.append(parent_dir)
 
 from core import pigchat
 from core import pigtime
-from core import pigemoji
 
 app = Flask(__name__)
 
