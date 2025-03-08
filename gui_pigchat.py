@@ -2,6 +2,8 @@ import tkinter as tk
 import core_pigchat
 import core_pigtime
 import pigemoji
+import sys
+import os
 
 def toggle_encrypt_decrypt():
     timestamp = core_pigtime.get_pig_timestamp()
@@ -42,8 +44,14 @@ top_frame.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
 
 # 加载野猪图片
 try:
-    # 请确保你有对应的野猪图片文件，这里假设图片名为 wild_boar.png 且与代码文件在同一目录
-    img = tk.PhotoImage(file="wild_boar.png")
+    if getattr(sys, 'frozen', False):
+        # 如果是打包后的程序
+        base_path = sys._MEIPASS
+    else:
+        # 如果是开发环境
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    img_path = os.path.join(base_path, "wild_boar.png")
+    img = tk.PhotoImage(file=img_path)
     img_width = img.width()
     img_height = img.height()
     # 根据图片大小调整窗口初始大小
