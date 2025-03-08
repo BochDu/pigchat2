@@ -19,9 +19,8 @@
 - `pigchat_gui.py`: PigChat GUI演示
 
 ### project_pigchat_flask
-- API
-  - `pigchat_server.py`: 野猪聊天HTTP服务
-  - `pigchat_server.md`: 野猪聊天HTTP协议
+- `pigchat_server.py`: 野猪聊天HTTP服务
+- `pigchat_server.md`: 野猪聊天HTTP协议
 
 ## 野猪加密流程
 
