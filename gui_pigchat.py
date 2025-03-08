@@ -4,6 +4,17 @@ import core_pigtime
 import pigemoji
 import sys
 import os
+import ctypes
+
+try:
+    # 任意唯一标识符
+    myappid = 'yourcompany.yourproduct.subproduct.version'
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+except AttributeError:
+    print("当前系统不支持 SetCurrentProcessExplicitAppUserModelID 方法。")
+except Exception as e:
+    print(f"设置 AppUserModelID 时出现错误: {e}")
+
 
 def toggle_encrypt_decrypt():
     timestamp = core_pigtime.get_pig_timestamp()
@@ -17,6 +28,7 @@ def toggle_encrypt_decrypt():
     entry.delete("1.0", tk.END)
     entry.insert("1.0", output_text)
 
+
 def adjust_password_entry_width():
     # 获取标题的宽度
     title_width = title_label.winfo_reqwidth()
@@ -26,6 +38,7 @@ def adjust_password_entry_width():
     entry_width = (title_width - password_label_width) // 10  # 除以 10 是因为 Entry 的宽度单位是字符
     if entry_width > 0:
         password_entry.config(width=entry_width)
+
 
 # 创建主窗口并隐藏
 root = tk.Tk()
@@ -89,6 +102,7 @@ entry.pack(pady=10, padx=20, expand=True, fill='both')
 def on_window_resize(event):
     title_label.config(wraplength=password_frame.winfo_width())
 
+
 # 绑定窗口大小改变事件
 root.bind("<Configure>", on_window_resize)
 
@@ -97,6 +111,13 @@ adjust_password_entry_width()
 
 # 强制 Tkinter 完成布局计算
 root.update_idletasks()
+
+# 设置窗口图标
+try:
+    icon_path = os.path.join(base_path, "wild_boar.ico")
+    root.iconbitmap(icon_path)
+except tk.TclError:
+    print("未能找到或加载图标，请检查图标文件路径和格式。图标文件应为 .ico 格式。")
 
 # 显示窗口
 root.deiconify()
