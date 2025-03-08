@@ -74,4 +74,4 @@ def convert_emoji_to_utf8():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run( host='127.0.0.1', port=5000, debug=True)
