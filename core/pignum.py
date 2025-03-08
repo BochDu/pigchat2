@@ -1,5 +1,5 @@
-import hexmap
-import seed
+from . import hexmap
+from . import seed
 
 # UTF-8 - HEX
 

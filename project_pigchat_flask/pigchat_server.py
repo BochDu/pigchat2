@@ -1,6 +1,14 @@
+import sys
+import os
 from flask import Flask, request, jsonify
-import core_pigchat
-import core_pigtime
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+from core import pigchat
+from core import pigtime
+from core import pigemoji
 
 app = Flask(__name__)
 
@@ -18,7 +26,7 @@ def api_get_pig_timestamp():
         if day:
             day = int(day)
 
-        result = core_pigtime.get_pig_timestamp(year, month, day)
+        result = pigtime.get_pig_timestamp(year, month, day)
         return jsonify({"pig_timestamp": result})
     except ValueError:
         return jsonify({"error": "Year, month, and day must be valid integers."}), 400
@@ -44,7 +52,7 @@ def convert_utf8_to_emoji():
         except (ValueError, TypeError):
             return jsonify({"error": "Timestamp must be an integer"}), 400
 
-        result = core_pigchat.utf8_to_emoji(utf8_str, timestamp, password)
+        result = pigchat.utf8_to_emoji(utf8_str, timestamp, password)
         return jsonify({"result": result})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -68,7 +76,7 @@ def convert_emoji_to_utf8():
         except (ValueError, TypeError):
             return jsonify({"error": "Timestamp must be an integer"}), 400
 
-        result = core_pigchat.emoji_to_utf8(emoji_str, timestamp, password)
+        result = pigchat.emoji_to_utf8(emoji_str, timestamp, password)
         return jsonify({"result": result})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
