@@ -23,6 +23,3 @@ def get_pig_timestamp(year=None, month=None, day=None):
     pig_timestamp = beijing_time.timestamp()
 
     return int(pig_timestamp)
-
-# test
-# print(get_pig_timestamp()) 

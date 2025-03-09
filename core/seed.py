@@ -59,13 +59,6 @@ def make_seed(timestamp, password):
 
     return ct
 
-# test
-# timestamp = 1741208586
-# password = "my_password"
-
-# seed = make_seed(timestamp, password)
-# print(seed)
-
 
 
 
