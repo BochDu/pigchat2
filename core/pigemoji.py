@@ -59,6 +59,22 @@ def check_no_emoji_string(input_string):
             return False
     return True
 
+def guess_no_emoji_string(input_string):
+    all_emojis = set()
+    for emojis in boar_emoji_dict.values():
+        all_emojis.update(emojis)
+
+    emoji_count = 0
+    for char in input_string:
+        if char in all_emojis:
+            emoji_count = emoji_count + 1
+
+    if len(input_string) == 0:
+        return True
+    ratio = emoji_count / len(input_string)
+
+    return ratio < 0.9
+
 # HEX - EMOJI
 
 def hex_to_boar_emoji(hex_string):
