@@ -26,17 +26,6 @@ def pignum_to_utf8(hex_secret,timestamp,password):
     utf8_str = hex_to_utf8(hex_str)
     return utf8_str
 
-# test
-# utf8_string = '将军'
-# timestamp = 1741208586
-# password = "my_password"
-
-# hex_string = utf8_to_pignum(utf8_string,timestamp,password)
-# print(hex_string)
-
-# converted_utf8_string = pignum_to_utf8(hex_string,timestamp,password)
-# print(converted_utf8_string)
-
 
 
 

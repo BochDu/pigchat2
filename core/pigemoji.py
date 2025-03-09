@@ -90,12 +90,3 @@ def boar_emoji_to_hex(emoji_string):
     for emoji in emoji_string:
         hex_string += reverse_boar_emoji_dict.get(emoji, emoji)
     return hex_string
-
-
-# 示例
-# hex_string = '0123456789abcdef'
-# boar_emoji_result = hex_to_boar_emoji(hex_string)
-# print("boar_emoji_result:", boar_emoji_result)
-
-# reverse_hex_result = boar_emoji_to_hex(boar_emoji_result)
-# print("reverse_hex_result:", reverse_hex_result)

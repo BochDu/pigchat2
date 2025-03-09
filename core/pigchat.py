@@ -19,15 +19,3 @@ def emoji_to_utf8(emoji_str,timestamp,password):
     else:
         utf8_str = emoji_str
     return utf8_str
-
-
-# test
-# utf8_string = '将军'
-# timestamp = 1741208586
-# password = "my_password"
-
-# emoji_str = utf8_to_emoji(utf8_string,timestamp,password)
-# print(emoji_str)
-
-# converted_utf8_string = emoji_to_utf8(emoji_str,timestamp,password)
-# print(converted_utf8_string)
