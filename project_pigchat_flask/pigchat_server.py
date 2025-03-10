@@ -32,6 +32,22 @@ def api_get_pig_timestamp():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/str_operation', methods=['POST'])
+def api_str_operation():
+    try:
+        data = request.get_json()
+        if data is None:
+            return jsonify({"error": "No JSON data provided"}), 400
+
+        input_str = data.get('input_str')
+        if input_str is None:
+            return jsonify({"error": "Missing 'input_str' parameter"}), 400
+
+        result = pigchat.determine_encryption_decryption(input_str)
+        return jsonify({"result": result})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/utf8_to_emoji', methods=['POST'])
 def convert_utf8_to_emoji():
     try:
@@ -81,4 +97,4 @@ def convert_emoji_to_utf8():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run( host='127.0.0.1', port=5000, debug=True)
+    app.run(host='127.0.0.1', port=5000, debug=True)
