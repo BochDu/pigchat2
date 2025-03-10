@@ -30,6 +30,29 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 }
 ```
 
+### 判断字符串操作
+
+- **URL**: `http://127.0.0.1:5000/str_operation`
+- **请求方式**: `POST`
+- **注意事项**: 
+  - 若判断通过 `result` 返回 `encrypt` 或 `decrypt`
+  - 若响应 `result` 内容为空则字符串无法加密或解密
+**请求体示例**:
+
+```json
+{
+    "input_str": "将军"
+}
+```
+
+**响应示例**:
+
+```json
+{
+    "result": "encrypt"
+}
+```
+
 ### UTF-8 转换为 Emoji
 
 - **URL**: `http://127.0.0.1:5000/utf8_to_emoji`

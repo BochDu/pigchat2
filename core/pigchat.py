@@ -10,7 +10,7 @@ def determine_encryption_decryption(str):
     elif pigemoji.check_emoji_string(str):
         return 'decrypt'
     else:
-        return None
+        return ''
 
 def utf8_to_emoji(utf8_str,timestamp,password):
     if pigemoji.check_no_emoji_string(utf8_str):
