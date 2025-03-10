@@ -4,6 +4,14 @@ from . import pignum
 # PIG NUM
 # utf8_str - hex_str - emoji_str
 
+def determine_encryption_decryption(str):
+    if pigemoji.check_no_emoji_string(str):
+        return 'encrypt'
+    elif pigemoji.check_emoji_string(str):
+        return 'decrypt'
+    else:
+        return None
+
 def utf8_to_emoji(utf8_str,timestamp,password):
     if pigemoji.check_no_emoji_string(utf8_str):
         hex_str = pignum.utf8_to_pignum(utf8_str,timestamp,password)
