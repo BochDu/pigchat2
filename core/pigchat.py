@@ -12,12 +12,19 @@ def determine_encryption_decryption(str):
     else:
         return ''
 
+def is_utf8_encoded(utf8_str):
+    try:
+        utf8_str.encode('utf-8')
+        return True
+    except UnicodeEncodeError:
+        return False
+
 def utf8_to_emoji(utf8_str,timestamp,password):
-    if pigemoji.check_no_emoji_string(utf8_str):
+    if is_utf8_encoded(utf8_str):
         hex_str = pignum.utf8_to_pignum(utf8_str,timestamp,password)
         emoji_str = pigemoji.hex_to_boar_emoji(hex_str)
     else:
-        emoji_str = utf8_str
+        emoji_str = ''
     return emoji_str
 
 def emoji_to_utf8(emoji_str,timestamp,password):

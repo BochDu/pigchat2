@@ -36,7 +36,9 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 - **请求方式**: `POST`
 - **注意事项**: 
   - 若判断通过 `result` 返回 `encrypt` 或 `decrypt`
-  - 若响应 `result` 内容为空则字符串无法加密或解密
+  - 字符串不包含字典里emoji - `encrypt`
+  - 字符串全由字典里emoji组成 - `decrypt`
+  - 若响应 `result` 内容为空则字符串异常不建议操作
 **请求体示例**:
 
 ```json
@@ -59,9 +61,8 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 - **请求方式**: `POST`
 - **响应内容**: 具有随机性，响应结果与示例不一致为正常现象
 - **注意事项**:
-  - 若 `utf8_str` 内容非法则 `result` 返回 `utf8_str` 内容
-  - 非UTF-8编码、包含emoji的 `utf8_str` 视作非法
-
+  - 若 `utf8_str` 为UTF-8编码 `result` 返回加密后结果
+  - 注意emoji表情也是utf-8编码，算合法参数可以加密
 **请求体示例**:
 
 ```json
@@ -84,8 +85,9 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 
 - **URL**: `http://127.0.0.1:5000/emoji_to_utf8`
 - **请求方式**: `POST`
-- **注意事项**: 若响应 `result` 为空说明时间密钥错误
-
+- **注意事项**: 
+  - 若响应 `result` 为空，解密失败时间和密钥有误
+  - 若响应 `result` 与 `emoji_str` 字符串相同，说明 `emoji_str` 有emoji字典外的字符
 **请求体示例**:
 
 ```json
