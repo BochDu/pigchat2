@@ -39,7 +39,7 @@ def check_boar_emoji_dict(boar_emoji_dict):
 
 # CHECK FUN
 
-# 字符串都是由字典里emoji组成TRUE
+# 字符串全由字典里emoji组成 - TRUE
 def check_emoji_string(emoji_string):
     valid_emojis = set()
     for emojis in boar_emoji_dict.values():
@@ -50,7 +50,7 @@ def check_emoji_string(emoji_string):
             return False
     return True
 
-# 字符串不包含字典里emoji组成TRUE
+# 字符串不包含字典里emoji - TRUE
 def check_no_emoji_string(input_string):
     all_emojis = set()
     for emojis in boar_emoji_dict.values():
