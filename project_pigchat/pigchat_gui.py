@@ -25,9 +25,10 @@ except Exception as e:
 def toggle_encrypt_decrypt():
     timestamp = pigtime.get_pig_timestamp()
     input_text = entry.get("1.0", tk.END).strip()
-    if pigemoji.check_no_emoji_string(input_text):
+    action_mode = pigchat.determine_encryption_decryption(input_text)
+    if action_mode == 'encrypt':
         output_text = pigchat.utf8_to_emoji(input_text, timestamp, password=password_var.get())
-    elif pigemoji.check_emoji_string(input_text):
+    elif action_mode == 'decrypt':
         output_text = pigchat.emoji_to_utf8(input_text, timestamp, password=password_var.get())
     else:
         output_text = input_text
