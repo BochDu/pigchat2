@@ -1,3 +1,5 @@
+![image](pigchat_poster.jpg)
+
 # 野猪聊天2
 
 安全聊天、猪言猪语、当日有效
