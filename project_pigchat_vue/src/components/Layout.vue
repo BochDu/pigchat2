@@ -95,19 +95,22 @@ watch(apiKey, (newValue) => {
 }
 
 .api-key-input :deep(.el-input__wrapper) {
-  background-color: #f5f5f5;
+  /* 设置统一的背景色 */
+  background-color: rgb(224, 224, 224); 
   border-radius: 50px;
   padding: 8px 16px;
   box-shadow: none !important;
   border: 1px solid transparent;
 }
 
+/* 去除 hover 状态的背景色变化 */
 .api-key-input :deep(.el-input__wrapper:hover) {
-  background-color: #f0f0f0;
+  background-color:rgb(224, 224, 224);
 }
 
+/* 去除 focus 状态的背景色变化 */
 .api-key-input :deep(.el-input__wrapper.is-focus) {
-  background-color: white;
+  background-color: rgb(224, 224, 224);
   border-color: #e0e0e0;
 }
 
