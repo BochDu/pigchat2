@@ -476,16 +476,16 @@ watch(messages, () => {
     padding: 10px 14px;
   }
   
-  /* src/views/Chat.vue */
-
   .input-area {
-    /* 增加输入区域的高度，例如设为 150px */
-    height: 150px; 
     padding: 16px;
     background: white;
     border-top: 1px solid #ebeef5;
     position: relative;
     z-index: 10;
+    /* 固定容器的高度，例如 200px，你可以根据实际需求调整 */
+    height: 200px; 
+    /* 使用 flex 布局来控制子元素的排列 */
+    display: flex;
   }
 
   .input-wrapper {
@@ -495,9 +495,10 @@ watch(messages, () => {
     max-width: 768px;
     margin: 0 auto;
     padding: 0 4px;
-    height: 100%; 
-    /* 新增：使用 flex-wrap 防止挤压 */
+    /* 防止输入框容器换行 */
     flex-wrap: nowrap;
+    /* 让输入框容器占满容器的垂直空间 */
+    flex: 1; 
   }
 
   .input-wrapper .el-input {
@@ -518,10 +519,9 @@ watch(messages, () => {
 
   .send-button {
     /* 设置固定宽度，例如 80px */
-    width: 80px; 
-    height: 36px;
+    width: 100px; 
+    height: 100px;
     font-size: 14px;
-    /* 防止按钮被挤压 */
     flex-shrink: 0; 
   }
 
