@@ -22,19 +22,17 @@
       
       <div class="input-area">
         <div class="input-wrapper">
-          <el-input
-            v-model="inputText"
-            placeholder="输入消息..."
-            clearable
-            @keyup.enter="handleSend"
-          >
-            <template #prefix>
-              <el-icon class="input-icon"><ChatRound /></el-icon>
-            </template>
-          </el-input>
-            <el-button type="primary" @click="handleSend" class="send-button">
-              <img src="../assets/wild_boar.png" alt="Convert" class="pig-icon" />
-            </el-button>
+        <el-input
+          v-model="inputText"
+          placeholder="输入消息..."
+          @keyup.enter="handleSend"
+        >
+        </el-input>
+
+          <el-button type="primary" @click="handleSend" class="send-button">
+            <img src="../assets/wild_boar.png" alt="Convert" class="pig-icon" />
+          </el-button>
+
         </div>
       </div>
     </div>
