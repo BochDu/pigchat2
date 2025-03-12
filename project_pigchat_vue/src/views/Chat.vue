@@ -260,11 +260,11 @@ watch(messages, () => {
 .input-area {
     padding: 16px;
     background: white;
-    border-top: 1px solid #ebeef5;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 10;
-    height: 200px;
-    min-height: 200px;
+    height: 150px;
+    min-height: 150px;
     display: flex;
     justify-content: center; /* 水平居中 */
     align-items: center; /* 垂直居中 */
