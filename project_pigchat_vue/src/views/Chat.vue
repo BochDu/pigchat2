@@ -394,16 +394,6 @@ watch(messages, () => {
   }
 }
 
-@media (max-width: 600px) {
-  .send-button {
-    /* 确保在小屏幕下宽高仍然相等 */
-    width: 36px;
-    height: 36px;
-    max-width: 60px;
-    max-height: 60px;
-  }
-}
-
 .pig-icon {
   width: 40px;
   height: 40px;
@@ -483,14 +473,15 @@ watch(messages, () => {
     position: relative;
     z-index: 10;
     /* 固定容器的高度，例如 200px，你可以根据实际需求调整 */
-    height: 200px; 
+    height: 200px;
+    max-height: 200px;
     /* 使用 flex 布局来控制子元素的排列 */
     display: flex;
   }
 
   .input-wrapper {
     display: flex;
-    gap: 12px;
+    gap: 20px;
     align-items: center;
     max-width: 768px;
     margin: 0 auto;
@@ -505,6 +496,8 @@ watch(messages, () => {
     flex: 1;
     /* 让输入框充满输入区域 */
     height: 100%; 
+    /* 设置输入框的最小高度 */
+    min-height: 100px; /* 修改为你期望的最小高度 */
   }
 
   .input-wrapper :deep(.el-input__wrapper) {
@@ -515,26 +508,15 @@ watch(messages, () => {
     background: #f5f7fa;
     /* 让输入框内部容器充满输入框 */
     height: 100%; 
+    min-height: 100px; /* 修改为你期望的最小高度 */
   }
 
   .send-button {
     /* 设置固定宽度，例如 80px */
-    width: 100px; 
-    height: 100px;
+    width: 80px; 
+    height: 80px;
     font-size: 14px;
     flex-shrink: 0; 
-  }
-
-  /* 小屏幕下的样式 */
-  @media (max-width: 600px) {
-    .send-button {
-      /* 确保在小屏幕下宽高仍然相等 */
-      width: 36px;
-      height: 36px;
-      max-width: 60px;
-      max-height: 60px;
-      flex-shrink: 0; 
-    }
   }
 }
 
