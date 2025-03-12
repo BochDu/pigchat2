@@ -22,12 +22,12 @@
       
       <div class="input-area">
         <div class="input-wrapper">
-        <el-input
-          v-model="inputText"
-          placeholder="输入消息..."
-          @keyup.enter="handleSend"
-        >
-        </el-input>
+          <textarea
+            v-model="inputText"
+            placeholder="输入消息..."
+            @keyup.enter="handleSend"
+            class="custom-textarea"
+          ></textarea>
 
           <el-button type="primary" @click="handleSend" class="send-button">
             <img src="../assets/wild_boar.png" alt="Convert" class="pig-icon" />
@@ -155,10 +155,21 @@ watch(messages, () => {
 </script>
 
 <style scoped>
+/* 隐藏页面滚动条 */
+body {
+  -ms-overflow-style: none;  /* IE 和 Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Chrome, Safari 和 Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .chat-room {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 80px);
+  height: calc(95vh - 80px);
   background: white;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
@@ -167,6 +178,15 @@ watch(messages, () => {
   position: relative;
   max-width: 1000px;
   width: calc(100% - 2rem);
+  
+  /* 新增隐藏滚动条的样式 */
+  -ms-overflow-style: none;  /* IE 和 Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Chrome, Safari 和 Opera */
+.chat-room::-webkit-scrollbar {
+  display: none;
 }
 
 .messages {
@@ -175,6 +195,15 @@ watch(messages, () => {
   padding: 20px;
   background: #f0f2f5;
   scroll-behavior: smooth;
+  
+  /* 新增隐藏滚动条的样式 */
+  -ms-overflow-style: none;  /* IE 和 Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Chrome, Safari 和 Opera */
+.messages::-webkit-scrollbar {
+  display: none;
 }
 
 .messages-container {
@@ -205,11 +234,12 @@ watch(messages, () => {
 
 .message-content {
   background: #1989fa;
-  color: white;
+  color: black; /* 修改文字颜色为黑色 */
   padding: 12px 16px;
   border-radius: 18px 4px 18px 18px;
   max-width: 70%;
-  word-break: break-all;
+  word-break: break-all; /* 消息内容自动换行 */
+  white-space: normal; /* 允许文本换行 */
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   position: relative;
   transition: all 0.3s ease;
@@ -270,6 +300,10 @@ watch(messages, () => {
 
 /* 输入框包装器样式 */
 .input-wrapper {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
     display: flex;
     gap: 20px;
     align-items: center;
@@ -280,35 +314,40 @@ watch(messages, () => {
     flex: 1;
 }
 
-/* Element UI 输入框样式 */
-.input-wrapper .el-input {
-    flex: 1;
-    height: 100%;
-    min-height: 100px;
+.custom-textarea {
+  width: 100%; /* 明确宽度 */
+  height: 100%;
+  min-height: 100px;
+  padding: 12px;
+  box-shadow: 0 0 0 1px #dcdfe6;
+  transition: all 0.3s ease;
+  border-radius: 24px;
+  background: #f5f7fa;
+  resize: none; /* 禁止用户调整大小 */
+  border: none;
+  outline: none;
+  white-space: normal;
+  word-break: break-all;
+  color: black; /* 这里修改文字颜色 */
+  -ms-overflow-style: none;  /* IE 和 Edge */
+  scrollbar-width: none;  /* Firefox */
+  
+  /* 确保盒子模型包含内边距和边框 */
+  box-sizing: border-box; 
 }
 
-/* 输入框内部容器样式 */
-.input-wrapper :deep(.el-input__wrapper) {
-    padding: 0 12px; /* 上下内边距设置为 0 */
-    box-shadow: 0 0 0 1px #dcdfe6;
-    transition: all 0.3s ease;
-    border-radius: 24px;
-    background: #f5f7fa;
-    height: 100%;
-    min-height: 100px;
-    display: flex; /* 采用 flex 布局 */
-    align-items: center; /* 垂直居中 */
+/* Chrome, Safari 和 Opera */
+.custom-textarea::-webkit-scrollbar {
+  display: none;
 }
 
-/* 输入框内部容器悬停样式 */
-.input-wrapper :deep(.el-input__wrapper:hover) {
-    box-shadow: 0 0 0 1px #409eff;
+.custom-textarea:hover {
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
     background: white;
 }
 
-/* 输入框内部容器聚焦样式 */
-.input-wrapper :deep(.el-input__wrapper.is-focus) {
-    box-shadow: 0 0 0 1px #409eff;
+.custom-textarea:focus {
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
     background: white;
 }
 
@@ -318,14 +357,6 @@ watch(messages, () => {
     color: #909399;
     margin-right: 4px;
     flex-shrink: 0; /* 防止图标缩小 */
-}
-
-/* 响应式设计：小屏幕设备 */
-@media (max-width: 768px) {
-    .input-wrapper {
-        max-width: 100%; /* 小屏幕下宽度占满 */
-        padding: 0 16px; /* 增加左右内边距 */
-    }
 }
 
 .send-button {
@@ -425,92 +456,4 @@ watch(messages, () => {
   object-fit: contain;
   pointer-events: none;
 }
-
-.pig-tooltip {
-  position: absolute;
-  top: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #333;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  white-space: nowrap;
-  pointer-events: none;
-  animation: fadeIn 0.3s ease;
-  font-weight: 500;
-}
-
-.pig-tooltip::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  width: 12px;
-  height: 12px;
-  background: #333;
-  border-radius: 2px;
-}
-
-@keyframes wiggle {
-  0% { transform: translate3d(var(--button-x), var(--button-y), 0) rotate(0deg) scale(1.1); }
-  25% { transform: translate3d(var(--button-x), var(--button-y), 0) rotate(-10deg) scale(1.1); }
-  50% { transform: translate3d(var(--button-x), var(--button-y), 0) rotate(0deg) scale(1.1); }
-  75% { transform: translate3d(var(--button-x), var(--button-y), 0) rotate(10deg) scale(1.1); }
-  100% { transform: translate3d(var(--button-x), var(--button-y), 0) rotate(0deg) scale(1.1); }
-}
-
-@keyframes fadeIn {
-  from { 
-    opacity: 0; 
-    transform: translate(-50%, -5px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translate(-50%, 0); 
-  }
-}
-
-@media (max-width: 768px) {
-  .chat-room {
-    height: calc(100vh - 72px);
-    margin: 0.5rem;
-    width: calc(100% - 1rem);
-    border-radius: 12px;
-  }
-  
-  .messages-container {
-    padding: 0 8px;
-  }
-  
-  .message-content {
-    max-width: 85%;
-    font-size: 14px;
-    padding: 10px 14px;
-  }
-}
-
-.message-item.selectable {
-  cursor: pointer;
-}
-
-.message-item.selectable:hover .message-content {
-  opacity: 0.8;
-  transform: scale(1.02);
-}
-
-.message-item.selectable:hover .message-content.is-emoji {
-  opacity: 0.8;
-  transform: scale(1.05);
-}
-
-/* 移除不需要的样式 */
-.message-content-wrapper,
-.message-checkbox,
-.message-content.with-checkbox,
-.message-content.is-emoji.with-checkbox {
-  display: none;
-}
-</style> 
+</style>
