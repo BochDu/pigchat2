@@ -6,19 +6,16 @@
         <h1 class="title">PigChat</h1>
       </div>
       <div class="header-right">
+        <!-- 密钥输入框 -->
         <el-input
           v-model="apiKey"
-          placeholder="请输入API密钥..."
-          :type="showKey ? 'text' : 'password'"
+          placeholder="请输入私人密钥..."
+          :type="isInputting ? 'text' : 'password'"
           clearable
           class="api-key-input"
+          @focus="isInputting = true"
+          @blur="isInputting = false"
         >
-          <template #suffix>
-            <el-icon class="view-icon" @click="toggleShowKey">
-              <View v-if="!showKey"/>
-              <Hide v-else/>
-            </el-icon>
-          </template>
         </el-input>
       </div>
     </header>
@@ -30,19 +27,15 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { View, Hide } from '@element-plus/icons-vue'
 
 const apiKey = ref(localStorage.getItem('apiKey') || '')
-const showKey = ref(false)
+// 新增一个响应式变量来记录是否正在输入
+const isInputting = ref(false)
 
 // 监听 apiKey 变化并保存到 localStorage
 watch(apiKey, (newValue) => {
   localStorage.setItem('apiKey', newValue)
 })
-
-const toggleShowKey = () => {
-  showKey.value = !showKey.value
-}
 </script>
 
 <style scoped>
@@ -184,4 +177,4 @@ const toggleShowKey = () => {
     font-size: 14px;
   }
 }
-</style> 
+</style>
