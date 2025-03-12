@@ -256,56 +256,83 @@ watch(messages, () => {
   background: rgba(64, 158, 255, 0.05);
 }
 
+/* 输入区域整体样式 */
 .input-area {
-  padding: 16px;
-  background: white;
-  border-top: 1px solid #ebeef5;
-  position: relative;
-  z-index: 10;
+    padding: 16px;
+    background: white;
+    border-top: 1px solid #ebeef5;
+    position: relative;
+    z-index: 10;
+    height: 200px;
+    min-height: 200px;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
 }
 
+/* 输入框包装器样式 */
 .input-wrapper {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  max-width: 768px;
-  margin: 0 auto;
-  padding: 0 4px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    width: 100%; /* 宽度占满父容器 */
+    max-width: 768px; /* 最大宽度限制 */
+    padding: 0 4px;
+    flex-wrap: nowrap;
+    flex: 1;
 }
 
+/* Element UI 输入框样式 */
 .input-wrapper .el-input {
-  flex: 1;
+    flex: 1;
+    height: 100%;
+    min-height: 100px;
 }
 
+/* 输入框内部容器样式 */
 .input-wrapper :deep(.el-input__wrapper) {
-  padding-left: 12px;
-  box-shadow: 0 0 0 1px #dcdfe6;
-  transition: all 0.3s ease;
-  border-radius: 24px;
-  background: #f5f7fa;
+    padding: 0 12px; /* 上下内边距设置为 0 */
+    box-shadow: 0 0 0 1px #dcdfe6;
+    transition: all 0.3s ease;
+    border-radius: 24px;
+    background: #f5f7fa;
+    height: 100%;
+    min-height: 100px;
+    display: flex; /* 采用 flex 布局 */
+    align-items: center; /* 垂直居中 */
 }
 
+/* 输入框内部容器悬停样式 */
 .input-wrapper :deep(.el-input__wrapper:hover) {
-  box-shadow: 0 0 0 1px #409eff;
-  background: white;
+    box-shadow: 0 0 0 1px #409eff;
+    background: white;
 }
 
+/* 输入框内部容器聚焦样式 */
 .input-wrapper :deep(.el-input__wrapper.is-focus) {
-  box-shadow: 0 0 0 1px #409eff;
-  background: white;
+    box-shadow: 0 0 0 1px #409eff;
+    background: white;
 }
 
+/* 输入图标样式 */
 .input-icon {
-  font-size: 18px;
-  color: #909399;
-  margin-right: 4px;
+    font-size: 18px;
+    color: #909399;
+    margin-right: 4px;
+    flex-shrink: 0; /* 防止图标缩小 */
+}
+
+/* 响应式设计：小屏幕设备 */
+@media (max-width: 768px) {
+    .input-wrapper {
+        max-width: 100%; /* 小屏幕下宽度占满 */
+        padding: 0 16px; /* 增加左右内边距 */
+    }
 }
 
 .send-button {
-  width: 10vw;
-  height: 10vw; 
-  max-width: 60px;
-  max-height: 60px;
+  width: 100px; 
+  height: 100px; 
   border-radius: 50%;
   background: #FFE5E5;
   display: flex;
@@ -395,8 +422,8 @@ watch(messages, () => {
 }
 
 .pig-icon {
-  width: 40px;
-  height: 40px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
   pointer-events: none;
 }
@@ -464,59 +491,6 @@ watch(messages, () => {
     max-width: 85%;
     font-size: 14px;
     padding: 10px 14px;
-  }
-  
-  .input-area {
-    padding: 16px;
-    background: white;
-    border-top: 1px solid #ebeef5;
-    position: relative;
-    z-index: 10;
-    /* 固定容器的高度，例如 200px，你可以根据实际需求调整 */
-    height: 200px;
-    max-height: 200px;
-    /* 使用 flex 布局来控制子元素的排列 */
-    display: flex;
-  }
-
-  .input-wrapper {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    max-width: 768px;
-    margin: 0 auto;
-    padding: 0 4px;
-    /* 防止输入框容器换行 */
-    flex-wrap: nowrap;
-    /* 让输入框容器占满容器的垂直空间 */
-    flex: 1; 
-  }
-
-  .input-wrapper .el-input {
-    flex: 1;
-    /* 让输入框充满输入区域 */
-    height: 100%; 
-    /* 设置输入框的最小高度 */
-    min-height: 100px; /* 修改为你期望的最小高度 */
-  }
-
-  .input-wrapper :deep(.el-input__wrapper) {
-    padding-left: 12px;
-    box-shadow: 0 0 0 1px #dcdfe6;
-    transition: all 0.3s ease;
-    border-radius: 24px;
-    background: #f5f7fa;
-    /* 让输入框内部容器充满输入框 */
-    height: 100%; 
-    min-height: 100px; /* 修改为你期望的最小高度 */
-  }
-
-  .send-button {
-    /* 设置固定宽度，例如 80px */
-    width: 80px; 
-    height: 80px;
-    font-size: 14px;
-    flex-shrink: 0; 
   }
 }
 
