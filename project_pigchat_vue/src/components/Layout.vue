@@ -4,6 +4,11 @@
       <div class="header-left">
         <img src="../assets/wild_boar.png" alt="PigChat Logo" class="logo" />
         <h1 class="title">PigChat</h1>
+        <!-- 新增日期显示元素 -->
+        <div class="date-container">
+          <span class="year">{{ currentYear }}</span>
+          <span class="month-day">{{ currentMonth }}<span class="day">{{ currentDay }}</span></span>
+        </div>
       </div>
       <div class="header-right">
         <!-- 密钥输入框 -->
@@ -27,11 +32,31 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 
 const apiKey = ref(localStorage.getItem("apiKey") || "");
 // 新增一个响应式变量来记录是否正在输入
 const isInputting = ref(false);
+// 新增响应式变量来存储当前日期的各个部分
+const currentYear = ref('');
+const currentMonth = ref('');
+const currentDay = ref('');
+
+// 获取当前日期并格式化
+const getCurrentDate = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  currentYear.value = year;
+  currentMonth.value = month;
+  currentDay.value = day;
+};
+
+onMounted(() => {
+  // 挂载时获取当前日期
+  getCurrentDate();
+});
 
 // 监听 apiKey 变化并保存到 localStorage
 watch(apiKey, (newValue) => {
@@ -89,6 +114,34 @@ watch(apiKey, (newValue) => {
   font-weight: 600;
   color: #333;
   margin: 0;
+}
+
+/* 新增日期样式 */
+.date-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  margin-left: 0.5rem;
+  /* 新增：设置固定宽度 */
+  width: 60px;
+}
+
+.year {
+  color: #666;
+  /* 新增：文本居中 */
+  text-align: center;
+}
+
+.month-day {
+  color: #999;
+  text-align: center;
+}
+
+.day {
+  margin-left: 0px;
 }
 
 .api-key-input {
@@ -167,6 +220,11 @@ watch(apiKey, (newValue) => {
 
   .title {
     font-size: 1.1rem;
+  }
+
+  /* 调整日期样式在小屏幕下的表现 */
+ .date-container {
+    font-size: 0.7rem;
   }
 
   .api-key-input {
