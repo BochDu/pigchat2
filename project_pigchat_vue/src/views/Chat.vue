@@ -48,11 +48,27 @@
 </template>
   
   <script setup>
-import { ref, watch, onMounted, computed, onUnmounted, nextTick } from "vue";
+import {
+  ref,
+  watch,
+  onMounted,
+  computed,
+  onUnmounted,
+  nextTick,
+  defineProps,
+} from "vue";
 import { Message, Position, ChatRound } from "@element-plus/icons-vue";
 import Layout from "../components/Layout.vue";
 import { ElMessage } from "element-plus";
 import axios from "axios";
+
+// 接收父组件传递的 apiKey
+const props = defineProps({
+  apiKey: {
+    type: String,
+    default: "",
+  },
+});
 
 const messages = ref([]);
 const inputText = ref("");
@@ -136,7 +152,7 @@ const handleSend = async () => {
         const { data } = await axios.post("/api/utf8_to_emoji", {
           utf8_str: inputValue,
           timestamp: timestamp,
-          password: "my_password",
+          password: props.apiKey,
         });
 
         console.log("接口返回的数据:", data); // 打印接口返回的数据
@@ -177,7 +193,7 @@ const handleSend = async () => {
         const { data } = await axios.post("/api/emoji_to_utf8", {
           emoji_str: inputValue,
           timestamp: timestamp,
-          password: "my_password",
+          password: props.apiKey,
         });
 
         console.log("接口返回的数据:", data); // 打印接口返回的数据
