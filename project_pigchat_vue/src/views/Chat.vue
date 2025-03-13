@@ -235,6 +235,36 @@ const handleSend = async () => {
 const handleMessageClick = (index) => {
   if (!canSelect.value) return;
   selectedIndex.value = selectedIndex.value === index ? -1 : index;
+
+  // 复制消息内容到剪贴板
+  const messageToCopy = messages.value[index].content;
+  if (navigator.clipboard) {
+    navigator.clipboard
+      .writeText(messageToCopy)
+      .then(() => {
+        ElMessage.success("消息已复制到剪贴板");
+      })
+      .catch((err) => {
+        console.error("复制失败:", err);
+        ElMessage.error("复制失败，请手动复制");
+      });
+  } else {
+    // 对于不支持 navigator.clipboard 的浏览器，可以使用 document.execCommand('copy')
+    const textarea = document.createElement("textarea");
+    textarea.value = messageToCopy;
+    textarea.style.position = "fixed";
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand("copy");
+      ElMessage.success("消息已复制到剪贴板");
+    } catch (err) {
+      console.error("复制失败:", err);
+      ElMessage.error("复制失败，请手动复制");
+    } finally {
+      document.body.removeChild(textarea);
+    }
+  }
 };
 
 const scrollToBottom = () => {
@@ -344,7 +374,6 @@ body::-webkit-scrollbar {
   margin-right: 8px;
   font-size: 15px;
   line-height: 1.4;
-  user-select: none;
 }
 
 /* 用户发送的消息样式 */
@@ -364,11 +393,6 @@ body::-webkit-scrollbar {
 
 .message-content.selectable {
   cursor: pointer;
-}
-
-.message-content.selected {
-  box-shadow: 0 0 0 2px #409eff;
-  transform: scale(1.02);
 }
 
 .message-item.selectable .message-content:hover {
