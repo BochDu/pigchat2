@@ -117,7 +117,9 @@ const handleSend = async () => {
   if (inputValue) {
     // step1 getpigtime
     try {
-      const timestamp = localStorage.getItem("pigTimestamp");
+      // 每次都获取最新的时间戳
+      const { data } = await axios.get("/api/get_pig_timestamp");
+      const timestamp = data.pig_timestamp.toString();
       if (!timestamp) {
         ElMessage.error("野猪跑路了，服务遇到问题");
         return;

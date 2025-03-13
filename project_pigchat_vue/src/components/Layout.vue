@@ -7,7 +7,9 @@
         <!-- 新增日期显示元素 -->
         <div class="date-container">
           <span class="year">{{ currentYear }}</span>
-          <span class="month-day">{{ currentMonth }}<span class="day">{{ currentDay }}</span></span>
+          <span class="month-day"
+            >{{ currentMonth }}<span class="day">{{ currentDay }}</span></span
+          >
         </div>
       </div>
       <div class="header-right">
@@ -33,29 +35,42 @@
 
 <script setup>
 import { ref, watch, onMounted } from "vue";
+import axios from "axios";
+import { ElMessage } from "element-plus";
 
 const apiKey = ref(localStorage.getItem("apiKey") || "");
 // 新增一个响应式变量来记录是否正在输入
 const isInputting = ref(false);
 // 新增响应式变量来存储当前日期的各个部分
-const currentYear = ref('');
-const currentMonth = ref('');
-const currentDay = ref('');
+const currentYear = ref("");
+const currentMonth = ref("");
+const currentDay = ref("");
 
 // 获取当前日期并格式化
-const getCurrentDate = () => {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  currentYear.value = year;
-  currentMonth.value = month;
-  currentDay.value = day;
+const getCurrentDate = async () => {
+  try {
+    const { data } = await axios.get("/api/get_pig_timestamp");
+    const timestamp = data.pig_timestamp.toString();
+    if (!timestamp) {
+      ElMessage.error("野猪跑路了，服务遇到问题");
+      return;
+    }
+    const date = new Date(parseInt(timestamp) * 1000);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    currentYear.value = year;
+    currentMonth.value = month;
+    currentDay.value = day;
+  } catch (error) {
+    ElMessage.error("野猪跑路了，服务遇到问题");
+    console.error(error);
+  }
 };
 
-onMounted(() => {
+onMounted(async () => {
   // 挂载时获取当前日期
-  getCurrentDate();
+  await getCurrentDate();
 });
 
 // 监听 apiKey 变化并保存到 localStorage
@@ -147,7 +162,7 @@ watch(apiKey, (newValue) => {
 .api-key-input {
   width: 320px;
   /* 新增：调整输入框高度 */
-  height: 36px; 
+  height: 36px;
 }
 
 .api-key-input :deep(.el-input__wrapper) {
@@ -155,7 +170,7 @@ watch(apiKey, (newValue) => {
   background-color: rgb(224, 224, 224);
   border-radius: 50px;
   /* 调整内边距让输入框更精致 */
-  padding: 6px 16px; 
+  padding: 6px 16px;
   box-shadow: none !important;
   border: 1px solid transparent;
 }
@@ -174,7 +189,7 @@ watch(apiKey, (newValue) => {
 .api-key-input :deep(.el-input__inner) {
   color: #666;
   /* 调整字体大小 */
-  font-size: 13px; 
+  font-size: 13px;
 }
 
 .api-key-input :deep(.el-input__inner::placeholder) {
@@ -188,7 +203,7 @@ watch(apiKey, (newValue) => {
 
 .api-key-input :deep(.el-input__clear) {
   color: #999;
-  font-size: 13px; 
+  font-size: 13px;
   margin-right: 8px;
 }
 
@@ -227,7 +242,7 @@ watch(apiKey, (newValue) => {
   }
 
   /* 调整日期样式在小屏幕下的表现 */
- .date-container {
+  .date-container {
     font-size: 0.7rem;
   }
 
