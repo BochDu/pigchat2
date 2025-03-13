@@ -198,7 +198,7 @@ const handleSend = async () => {
 
         console.log("接口返回的数据:", data); // 打印接口返回的数据
         if (data && data.result === "") {
-          ElMessage.error("野猪无能为力，请输入正确密钥");
+          ElMessage.error("野猪不会，时间或密钥错误");
           messages.value.pop();
           // 可根据需要滚动到合适的位置，这里简单处理为滚动到倒数第二条消息
           scrollToBottom();
@@ -223,6 +223,7 @@ const handleSend = async () => {
       } else {
         // 其他情况，视为异常
         ElMessage.error("野猪看不懂，去除emoji试试");
+
         return;
       }
     } catch (error) {
@@ -246,7 +247,6 @@ const handleMessageClick = (index) => {
       })
       .catch((err) => {
         console.error("复制失败:", err);
-        ElMessage.error("复制失败，请手动复制");
       });
   } else {
     // 对于不支持 navigator.clipboard 的浏览器，可以使用 document.execCommand('copy')
@@ -260,7 +260,6 @@ const handleMessageClick = (index) => {
       ElMessage.success("消息已复制到剪贴板");
     } catch (err) {
       console.error("复制失败:", err);
-      ElMessage.error("复制失败，请手动复制");
     } finally {
       document.body.removeChild(textarea);
     }
