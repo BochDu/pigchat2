@@ -228,7 +228,7 @@ const handleSend = async () => {
       }
     } catch (error) {
       console.error("转换失败:", error);
-      ElMessage.error("野猪发挥失误，转换失败");
+      ElMessage.error("野猪跑路了，服务遇到问题");
     }
   }
 };
