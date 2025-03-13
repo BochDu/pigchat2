@@ -221,66 +221,6 @@ const handleMessageClick = (index) => {
   selectedIndex.value = selectedIndex.value === index ? -1 : index;
 };
 
-const convertToEmoji = async (event) => {
-  if (isDragging.value) return;
-
-  // 如果只有一条消息，直接转换它
-  if (messages.value.length === 1) {
-    selectedIndex.value = 0;
-  }
-  // 如果有多条消息但没有选中任何消息，不执行转换
-  else if (messages.value.length >= 2 && selectedIndex.value === -1) {
-    return;
-  }
-
-  const selectedMessage = messages.value[selectedIndex.value];
-  if (!selectedMessage) return;
-
-  try {
-    const timestamp = localStorage.getItem("pigTimestamp");
-    if (!timestamp) {
-      ElMessage.error("时间戳未获取，请稍后再试");
-      return;
-    }
-
-    if (!selectedMessage.isEmoji) {
-      const { data } = await axios.post("/api/utf8_to_emoji", {
-        utf8_str: selectedMessage.content,
-        timestamp: timestamp,
-        password: "my_password",
-      });
-
-      messages.value[selectedIndex.value] = {
-        content: data.result,
-        isEmoji: true,
-        time: selectedMessage.time,
-        canConvert: true,
-        isUser: selectedMessage.isUser, // 保留原消息的 isUser 属性
-      };
-    } else {
-      const { data } = await axios.post("/api/emoji_to_utf8", {
-        emoji_str: selectedMessage.content,
-        timestamp: timestamp,
-        password: "my_password",
-      });
-
-      messages.value[selectedIndex.value] = {
-        content: data.result,
-        isEmoji: false,
-        time: selectedMessage.time,
-        canConvert: true,
-        isUser: selectedMessage.isUser, // 保留原消息的 isUser 属性
-      };
-    }
-
-    // 重置选择状态
-    selectedIndex.value = -1;
-  } catch (error) {
-    console.error("转换失败:", error);
-    ElMessage.error("转换失败，请稍后重试");
-  }
-};
-
 const scrollToBottom = () => {
   setTimeout(() => {
     if (messagesContainer.value) {
