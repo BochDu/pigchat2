@@ -20,7 +20,8 @@
       </div>
     </header>
     <main class="main-content">
-      <slot></slot>
+      <!-- 传递 apiKey 给子组件 -->
+      <slot :apiKey="apiKey"></slot>
     </main>
   </div>
 </template>
