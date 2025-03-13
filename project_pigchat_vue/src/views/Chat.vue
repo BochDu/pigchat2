@@ -26,10 +26,11 @@
         <div class="input-area">
           <div class="input-wrapper">
             <textarea
-              v-model="inputText"
-              placeholder="输入消息..."
-              @keyup.enter="handleSend"
-              class="custom-textarea"
+            v-model="inputText"
+            placeholder="输入消息..."
+            @keyup.enter="handleSend"
+            @input="() => console.log('输入框的值:', inputText.value)"
+            class="custom-textarea"
             ></textarea>
   
             <el-button type="primary" @click="handleSend" class="send-button">
@@ -63,34 +64,89 @@
     return `${hours}:${minutes}`
   }
   
-  const handleSend = () => {
-    if (inputText.value.trim()) {
-      // 发送的消息标记为用户消息，isUser 为 true
-      messages.value.push({
-        content: inputText.value,
-        isEmoji: false,
-        time: getCurrentTime(),
-        canConvert: true,
-        isUser: true
-      })
-      canConvert.value = true
-      selectedIndex.value = -1
-      inputText.value = ''
-      scrollToBottom()
-  
-      // 模拟收到回复消息，isUser 为 false
-      setTimeout(() => {
-        messages.value.push({
-          content: '这是回复消息',
-          isEmoji: false,
+
+  const fetchPigTimestamp = async () => {
+  try {
+    const lastFetchTime = localStorage.getItem('lastPigTimestampFetch')
+    const now = Date.now()
+    
+    // 检查是否需要重新获取（一天 = 24 * 60 * 60 * 1000 毫秒）
+    if (!lastFetchTime || (now - parseInt(lastFetchTime)) > 24 * 60 * 60 * 1000) {
+      const { data } = await axios.get('/api/get_pig_timestamp')
+      
+      // 存储时间戳和最后获取时间
+      localStorage.setItem('pigTimestamp', data.pig_timestamp.toString())
+      localStorage.setItem('lastPigTimestampFetch', now.toString())
+      
+      console.log('成功获取新的pig_timestamp:', data.pig_timestamp)
+    } else {
+      console.log('使用缓存的pig_timestamp')
+    }
+  } catch (error) {
+    console.error('获取pig_timestamp失败:', error)
+    ElMessage.error('获取时间戳失败，请检查API服务是否正常运行')
+  }
+}
+
+onMounted(async () => {
+  await fetchPigTimestamp(); // 确保在组件挂载时获取时间戳
+});
+
+const handleSend = async () => {
+  // 保存输入的文本，避免后续清空操作影响
+  const inputValue = inputText.value.trim();
+  if (inputValue) {
+    // 发送的消息标记为用户消息，isUser 为 true
+    messages.value.push({
+      content: inputValue,
+      isEmoji: false,
+      time: getCurrentTime(),
+      canConvert: true,
+      isUser: true
+    });
+    canConvert.value = true;
+    selectedIndex.value = -1;
+    inputText.value = ''; // 清空输入框
+    scrollToBottom();
+
+    try {
+      const timestamp = localStorage.getItem('pigTimestamp');
+      if (!timestamp) {
+        ElMessage.error('时间戳未获取，请稍后再试');
+        return;
+      }
+
+      // 调用加密 API 进行转换，使用保存的输入值
+      const { data } = await axios.post('/api/utf8_to_emoji', {
+        utf8_str: inputValue,
+        timestamp: timestamp,
+        password: 'my_password'
+      });
+
+      console.log('接口返回的数据:', data); // 打印接口返回的数据
+
+      if (data && data.result) {
+        // 模拟收到回复消息，isUser 为 false，显示转换后的结果
+        const newMessage = {
+          content: data.result,
+          isEmoji: true,
           time: getCurrentTime(),
           canConvert: true,
           isUser: false
-        })
-        scrollToBottom()
-      }, 1000)
+        };
+        messages.value.push(newMessage);
+        console.log('添加的新消息:', newMessage); // 打印添加的新消息
+        scrollToBottom();
+      } else {
+        console.error('接口返回数据格式错误:', data);
+        ElMessage.error('接口返回数据格式错误，请检查 API 服务');
+      }
+    } catch (error) {
+      console.error('转换失败:', error);
+      ElMessage.error('转换失败，请稍后重试');
     }
   }
+};
   
   const handleMessageClick = (index) => {
     if (!canSelect.value) return
