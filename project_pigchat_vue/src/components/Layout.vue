@@ -2,7 +2,7 @@
   <div class="layout">
     <header class="header">
       <div class="header-left">
-        <img src="../assets/wild_boar.png" alt="PigChat Logo" class="logo">
+        <img src="../assets/wild_boar.png" alt="PigChat Logo" class="logo" />
         <h1 class="title">PigChat</h1>
       </div>
       <div class="header-right">
@@ -26,16 +26,16 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch } from "vue";
 
-const apiKey = ref(localStorage.getItem('apiKey') || '')
+const apiKey = ref(localStorage.getItem("apiKey") || "");
 // 新增一个响应式变量来记录是否正在输入
-const isInputting = ref(false)
+const isInputting = ref(false);
 
 // 监听 apiKey 变化并保存到 localStorage
 watch(apiKey, (newValue) => {
-  localStorage.setItem('apiKey', newValue)
-})
+  localStorage.setItem("apiKey", newValue);
+});
 </script>
 
 <style scoped>
@@ -96,7 +96,7 @@ watch(apiKey, (newValue) => {
 
 .api-key-input :deep(.el-input__wrapper) {
   /* 设置统一的背景色 */
-  background-color: rgb(224, 224, 224); 
+  background-color: rgb(224, 224, 224);
   border-radius: 50px;
   padding: 8px 16px;
   box-shadow: none !important;
@@ -105,7 +105,7 @@ watch(apiKey, (newValue) => {
 
 /* 去除 hover 状态的背景色变化 */
 .api-key-input :deep(.el-input__wrapper:hover) {
-  background-color:rgb(224, 224, 224);
+  background-color: rgb(224, 224, 224);
 }
 
 /* 去除 focus 状态的背景色变化 */
@@ -171,11 +171,11 @@ watch(apiKey, (newValue) => {
   .api-key-input {
     width: 240px;
   }
-  
+
   .api-key-input :deep(.el-input__wrapper) {
     padding: 6px 12px;
   }
-  
+
   .api-key-input :deep(.view-icon) {
     font-size: 14px;
   }
