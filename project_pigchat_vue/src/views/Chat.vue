@@ -341,35 +341,14 @@ const handleSend = async () => {
     cursor: pointer;
   }
   
-  .message-content.is-emoji {
-    background: transparent;
-    font-size: 4rem;
-    padding: 4px;
-    box-shadow: none;
-    margin-right: 0;
-    line-height: 1;
-  }
-  
   .message-content.selected {
     box-shadow: 0 0 0 2px #409eff;
     transform: scale(1.02);
   }
   
-  .message-content.is-emoji.selected {
-    box-shadow: 0 0 0 2px #409eff;
-    transform: scale(1.05);
-    background: rgba(64, 158, 255, 0.1);
-  }
-  
   .message-item.selectable .message-content:hover {
     opacity: 0.8;
     transform: scale(1.02);
-  }
-  
-  .message-item.selectable .message-content.is-emoji:hover {
-    opacity: 0.8;
-    transform: scale(1.05);
-    background: rgba(64, 158, 255, 0.05);
   }
   
   /* 输入区域整体样式 */
