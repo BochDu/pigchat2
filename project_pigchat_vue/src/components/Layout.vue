@@ -14,7 +14,7 @@
         <!-- 密钥输入框 -->
         <el-input
           v-model="apiKey"
-          placeholder="请输入私人密钥..."
+          placeholder="Enter your private key ..."
           :type="isInputting ? 'text' : 'password'"
           clearable
           class="api-key-input"
@@ -146,13 +146,16 @@ watch(apiKey, (newValue) => {
 
 .api-key-input {
   width: 320px;
+  /* 新增：调整输入框高度 */
+  height: 36px; 
 }
 
 .api-key-input :deep(.el-input__wrapper) {
   /* 设置统一的背景色 */
   background-color: rgb(224, 224, 224);
   border-radius: 50px;
-  padding: 8px 16px;
+  /* 调整内边距让输入框更精致 */
+  padding: 6px 16px; 
   box-shadow: none !important;
   border: 1px solid transparent;
 }
@@ -170,7 +173,8 @@ watch(apiKey, (newValue) => {
 
 .api-key-input :deep(.el-input__inner) {
   color: #666;
-  font-size: 14px;
+  /* 调整字体大小 */
+  font-size: 13px; 
 }
 
 .api-key-input :deep(.el-input__inner::placeholder) {
@@ -184,13 +188,13 @@ watch(apiKey, (newValue) => {
 
 .api-key-input :deep(.el-input__clear) {
   color: #999;
-  font-size: 14px;
+  font-size: 13px; 
   margin-right: 8px;
 }
 
 .api-key-input :deep(.view-icon) {
   color: #999;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   padding: 4px;
 }

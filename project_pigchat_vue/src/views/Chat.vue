@@ -32,7 +32,7 @@
         <div class="input-wrapper">
           <textarea
             v-model="inputText"
-            placeholder="输入消息..."
+            placeholder="Start a new encrypted chat"
             @keyup.enter="handleSend"
             @input="() => console.log('输入框的值:', inputText.value)"
             class="custom-textarea"
