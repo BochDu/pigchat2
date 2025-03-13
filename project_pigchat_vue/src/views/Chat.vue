@@ -243,7 +243,7 @@ const handleMessageClick = (index) => {
     navigator.clipboard
       .writeText(messageToCopy)
       .then(() => {
-        ElMessage.success("消息已复制到剪贴板");
+        ElMessage.success("已复制");
       })
       .catch((err) => {
         console.error("复制失败:", err);
@@ -257,7 +257,7 @@ const handleMessageClick = (index) => {
     textarea.select();
     try {
       document.execCommand("copy");
-      ElMessage.success("消息已复制到剪贴板");
+      ElMessage.success("已复制");
     } catch (err) {
       console.error("复制失败:", err);
     } finally {
