@@ -5,9 +5,9 @@ import secrets
 
 
 class FancyHex:
-    @classmethod
+    @staticmethod
     @cache
-    def index2fancy_candidate(cls) -> Dict[str, List[str]]:
+    def index2fancy_candidate() -> Dict[str, List[str]]:
         return {
             '0': ['🐗', '🍎', '💐', '💩'],
             '1': ['🐷', '🍊', '🌱', '😀'],
@@ -78,16 +78,17 @@ class FancyHex:
 
 
 class ShadowHex(FancyHex):
-    @classmethod
-    def index2fancy_candidate(cls):
+    @staticmethod
+    @cache
+    def index2fancy_candidate():
         res = {}
         begin = '\U000E0100'
         for i in range(16):
             res[str(hex(i))[2]] = [chr(ord(begin) + i * 4 + j) for j in range(4)]
         return res
 
-    @classmethod
-    def emoji_pool(cls):
+    @staticmethod
+    def emoji_pool():
         emoji_pool = [emojis for emojis in super().index2fancy_candidate().values()]
         return sum(emoji_pool, [])
 
