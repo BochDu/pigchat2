@@ -4,7 +4,6 @@
       <div class="header-left">
         <img src="../assets/wild_boar.png" alt="PigChat Logo" class="logo" />
         <h1 class="title">PigChat</h1>
-        <!-- 新增日期显示元素 -->
         <div class="date-container">
           <span class="year">{{ currentYear }}</span>
           <span class="month-day"
@@ -17,11 +16,8 @@
         <el-input
           v-model="apiKey"
           placeholder="Enter your private key"
-          :type="isInputting ? 'text' : 'password'"
           clearable
           class="api-key-input"
-          @focus="isInputting = true"
-          @blur="isInputting = false"
         >
         </el-input>
       </div>
@@ -38,14 +34,10 @@ import axios from "axios";
 import { ElMessage } from "element-plus";
 
 const apiKey = ref(localStorage.getItem("apiKey") || "");
-// 新增一个响应式变量来记录是否正在输入
-const isInputting = ref(false);
-// 新增响应式变量来存储当前日期的各个部分
 const currentYear = ref("");
 const currentMonth = ref("");
 const currentDay = ref("");
 
-// 获取当前日期并格式化
 const getCurrentDate = async () => {
   try {
     const { data } = await axios.get("/api/get_pig_timestamp");
@@ -68,11 +60,9 @@ const getCurrentDate = async () => {
 };
 
 onMounted(async () => {
-  // 挂载时获取当前日期
   await getCurrentDate();
 });
 
-// 监听 apiKey 变化并保存到 localStorage，同时增加日志输出
 watch(apiKey, (newValue, oldValue) => {
   console.log(`API Key 已更新，旧值: ${oldValue}，新值: ${newValue}`);
   localStorage.setItem("apiKey", newValue);
@@ -80,6 +70,7 @@ watch(apiKey, (newValue, oldValue) => {
 </script>
 
 <style scoped>
+/* 原有的样式代码保持不变 */
 .layout {
   min-height: 100vh;
   height: 100vh;
@@ -131,7 +122,6 @@ watch(apiKey, (newValue, oldValue) => {
   margin: 0;
 }
 
-/* 新增日期样式 */
 .date-container {
   display: flex;
   flex-direction: column;
@@ -140,13 +130,11 @@ watch(apiKey, (newValue, oldValue) => {
   font-size: 0.8rem;
   line-height: 1;
   margin-left: 0.5rem;
-  /* 新增：设置固定宽度 */
   width: 60px;
 }
 
 .year {
   color: #666;
-  /* 新增：文本居中 */
   text-align: center;
 }
 
@@ -161,26 +149,21 @@ watch(apiKey, (newValue, oldValue) => {
 
 .api-key-input {
   width: 320px;
-  /* 新增：调整输入框高度 */
   height: 36px;
 }
 
 .api-key-input :deep(.el-input__wrapper) {
-  /* 设置统一的背景色 */
   background-color: rgb(224, 224, 224);
   border-radius: 50px;
-  /* 调整内边距让输入框更精致 */
   padding: 6px 16px;
   box-shadow: none !important;
   border: 1px solid transparent;
 }
 
-/* 去除 hover 状态的背景色变化 */
 .api-key-input :deep(.el-input__wrapper:hover) {
   background-color: rgb(224, 224, 224);
 }
 
-/* 去除 focus 状态的背景色变化 */
 .api-key-input :deep(.el-input__wrapper.is-focus) {
   background-color: rgb(224, 224, 224);
   border-color: #e0e0e0;
@@ -188,7 +171,6 @@ watch(apiKey, (newValue, oldValue) => {
 
 .api-key-input :deep(.el-input__inner) {
   color: #666;
-  /* 调整字体大小 */
   font-size: 13px;
 }
 
@@ -241,15 +223,12 @@ watch(apiKey, (newValue, oldValue) => {
     font-size: 1.1rem;
   }
 
-  /* 调整日期样式在小屏幕下的表现 */
   .date-container {
     font-size: 0.7rem;
   }
 
   .api-key-input {
-    /* 增大输入框宽度，方便手机用户输入 */
     width: 100%;
-    /* 调整输入框高度，增大触摸区域 */
     height: 40px;
   }
 
