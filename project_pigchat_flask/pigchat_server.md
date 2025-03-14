@@ -64,6 +64,7 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 - **注意事项**:
   - 若 `utf8_str` 为UTF-8编码 `result` 返回加密后结果
   - 注意emoji表情也是utf-8编码，算合法参数可以加密
+  - 缺失"password"时候，密钥默认采用空字符串
 
 **请求体示例**:
 
@@ -90,6 +91,7 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 - **注意事项**: 
   - 若响应 `result` 为空，解密失败时间和密钥有误
   - 若响应 `result` 与 `emoji_str` 字符串相同，说明 `emoji_str` 有emoji字典外的字符
+  - 缺失"password"时候，密钥默认采用空字符串
 
 **请求体示例**:
 

@@ -57,9 +57,9 @@ def convert_utf8_to_emoji():
 
         utf8_str = data.get('utf8_str')
         timestamp_str = data.get('timestamp')
-        password = data.get('password')
+        password = data.get('password', '')
 
-        if utf8_str is None or timestamp_str is None or password is None:
+        if utf8_str is None or timestamp_str is None:
             return jsonify({"error": "Missing required parameters"}), 400
 
         try:
@@ -81,9 +81,9 @@ def convert_emoji_to_utf8():
 
         emoji_str = data.get('emoji_str')
         timestamp_str = data.get('timestamp')
-        password = data.get('password')
+        password = data.get('password', '')
 
-        if emoji_str is None or timestamp_str is None or password is None:
+        if emoji_str is None or timestamp_str is None:
             return jsonify({"error": "Missing required parameters"}), 400
 
         try:
