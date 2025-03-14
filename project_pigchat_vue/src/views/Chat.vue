@@ -70,6 +70,9 @@ const handleSend = async () => {
         return;
       }
 
+      const apiKey = localStorage.getItem("apiKey");
+      const password = apiKey ? apiKey : "";
+
       // step2 checkstr
       const response = await axios.post("/api/str_operation", {
         input_str: inputValue,
@@ -96,7 +99,7 @@ const handleSend = async () => {
         const { data } = await axios.post("/api/utf8_to_emoji", {
           utf8_str: inputValue,
           timestamp: timestamp,
-          password: localStorage.getItem("apiKey"),
+          password: password,
         });
 
         console.log("接口返回的数据:", data); // 打印接口返回的数据
@@ -132,7 +135,7 @@ const handleSend = async () => {
         const { data } = await axios.post("/api/emoji_to_utf8", {
           emoji_str: inputValue,
           timestamp: timestamp,
-          password: localStorage.getItem("apiKey"),
+          password: password,
         });
 
         console.log("接口返回的数据:", data); // 打印接口返回的数据
