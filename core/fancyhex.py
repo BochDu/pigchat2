@@ -5,12 +5,9 @@ import secrets
 
 
 class FancyHex:
-    def __init__(self):
-        pass
-
-    @classmethod
+    @staticmethod
     @cache
-    def index2fancy_candidate(cls) -> Dict[str, List[str]]:
+    def index2fancy_candidate() -> Dict[str, List[str]]:
         return {
             '0': ['🐗', '🍎', '💐', '💩'],
             '1': ['🐷', '🍊', '🌱', '😀'],
@@ -60,25 +57,21 @@ class FancyHex:
         return boar_emoji_string
 
     @classmethod
-    def fancy2hex(cls, fancy: str):
+    def fancy2hex(cls, fancy: str)->str:
         hex_string = ''
         for emoji in fancy:
             hex_string += cls.fancy_candidate2index().get(emoji, emoji)
         return hex_string
 
     @classmethod
-    def is_fancy(cls, fancy: str):
-        valid_emojis = set()
-        for emojis in cls.index2fancy_candidate().values():
-            valid_emojis.update(emojis)
-
+    def is_fancy(cls, fancy: str)->bool:
         for emoji in fancy:
-            if emoji not in valid_emojis:
+            if emoji not in cls.fancy_candidate_set():
                 return False
         return True
 
     @classmethod
-    def no_fancy(cls, fancy: str):
+    def no_fancy(cls, fancy: str)->bool:
         for char in fancy:
             if char in cls.fancy_candidate_set():
                 return False
@@ -86,8 +79,9 @@ class FancyHex:
 
 
 class ShadowHex(FancyHex):
-    @classmethod
-    def index2fancy_candidate(cls):
+    @staticmethod
+    @cache
+    def index2fancy_candidate()->Dict[str, List[str]]:
         res = {}
         begin = '\U000E0100'
         for i in range(16):
@@ -95,7 +89,7 @@ class ShadowHex(FancyHex):
         return res
 
     @classmethod
-    def emoji_pool(cls):
+    def emoji_pool(cls)->List[str]:
         emoji_pool = [emojis for emojis in super().index2fancy_candidate().values()]
         return sum(emoji_pool, [])
 
@@ -104,15 +98,15 @@ class ShadowHex(FancyHex):
         return secrets.choice(cls.emoji_pool()) + super().hex2fancy(hex_str)
 
     @classmethod
-    def fancy2hex(cls, fancy: str):
+    def fancy2hex(cls, fancy: str)->str:
         return super().fancy2hex(fancy[1:])
 
     @classmethod
-    def is_fancy(cls, fancy: str):
+    def is_fancy(cls, fancy: str)->bool:
         return super().is_fancy(fancy[1:]) and fancy[0] in cls.emoji_pool()
 
     @classmethod
-    def no_fancy(cls, fancy: str):
+    def no_fancy(cls, fancy: str)->bool:
         return super().no_fancy(fancy[1:])
 
 
