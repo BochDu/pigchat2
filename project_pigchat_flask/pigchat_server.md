@@ -8,7 +8,7 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 
 ### 获取野猪时间戳
 
-- **URL**: `http://127.0.0.1:5000/get_pig_timestamp`
+- **URL**: `http://127.0.0.1:5001/get_pig_timestamp`
 - **请求方式**: `GET`
 - **注意事项**: 请求体非必须，采用本地时间无需请求体，指定时间需要传入年月日
 
@@ -32,7 +32,7 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 
 ### 判断字符串操作
 
-- **URL**: `http://127.0.0.1:5000/str_operation`
+- **URL**: `http://127.0.0.1:5001/str_operation`
 - **请求方式**: `POST`
 - **注意事项**: 
   - 若判断通过 `result` 返回 `encrypt` 或 `decrypt`
@@ -58,7 +58,7 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 
 ### UTF-8 转换为 Emoji
 
-- **URL**: `http://127.0.0.1:5000/utf8_to_emoji`
+- **URL**: `http://127.0.0.1:5001/utf8_to_emoji`
 - **请求方式**: `POST`
 - **响应内容**: 具有随机性，响应结果与示例不一致为正常现象
 - **注意事项**:
@@ -86,7 +86,7 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 
 ### Emoji 转换为 UTF-8
 
-- **URL**: `http://127.0.0.1:5000/emoji_to_utf8`
+- **URL**: `http://127.0.0.1:5001/emoji_to_utf8`
 - **请求方式**: `POST`
 - **注意事项**: 
   - 若响应 `result` 为空，解密失败时间和密钥有误
