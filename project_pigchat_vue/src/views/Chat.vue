@@ -479,7 +479,7 @@ body::-webkit-scrollbar {
 .send-button {
   width: 100px;
   height: 100px;
-  border-radius: 50%;
+  border-radius: 10px; /* 圆角矩形的圆角半径 */
   background: #ffe5e5;
   display: flex;
   align-items: center;
@@ -506,7 +506,7 @@ body::-webkit-scrollbar {
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+  border-radius: 10px; /* 圆角矩形的圆角半径 */
   box-shadow: 0 0 0 rgba(255, 154, 158, 0);
   transition: all 0.3s ease;
   z-index: -1;
@@ -547,6 +547,11 @@ body::-webkit-scrollbar {
 
 .send-button:focus {
   outline: none;
+}
+
+.pig-icon {
+  width: 50px; /* 设置图片宽度 */
+  height: 45px; /* 设置图片高度 */
 }
 
 @keyframes wiggle {
