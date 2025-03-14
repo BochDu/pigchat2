@@ -60,12 +60,8 @@ class FancyHex:
 
     @classmethod
     def is_fancy(cls, fancy: str)->bool:
-        valid_emojis = set()
-        for emojis in cls.index2fancy_candidate().values():
-            valid_emojis.update(emojis)
-
         for emoji in fancy:
-            if emoji not in valid_emojis:
+            if emoji not in cls.fancy_candidate_set():
                 return False
         return True
 

@@ -102,5 +102,35 @@ def convert_emoji_to_utf8():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+@app.route('/duplex', methods=['POST'])
+def convert_emoji_to_utf8():
+    try:
+        data = request.get_json()
+        if data is None:
+            return jsonify({"error": "No JSON data provided"}), 400
+
+        user_input_str = data.get('user_input_str')
+        timestamp_str = data.get('timestamp')
+        password = data.get('password')
+
+        if user_input_str is None or timestamp_str is None:
+            return jsonify({"error": "Missing required parameters"}), 400
+
+        try:
+            timestamp = int(timestamp_str)
+        except (ValueError, TypeError):
+            return jsonify({"error": "Timestamp must be an integer"}), 400
+
+        if password is None:
+            password = ''
+
+        result = pigchat.duplex_convert(user_input_str, timestamp, password)
+        return jsonify({"result": result})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5001)
