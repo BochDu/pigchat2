@@ -16,7 +16,7 @@
         <!-- 密钥输入框 -->
         <el-input
           v-model="apiKey"
-          placeholder="Enter your private key ..."
+          placeholder="Enter your private key"
           :type="isInputting ? 'text' : 'password'"
           clearable
           class="api-key-input"
