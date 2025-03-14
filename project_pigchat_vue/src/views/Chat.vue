@@ -71,7 +71,12 @@ const handleSend = async () => {
       }
 
       const apiKey = localStorage.getItem("apiKey");
-      const password = apiKey ? apiKey : "";
+      let password;
+      if (apiKey === "none" || !apiKey) {
+        password = "";
+      } else {
+        password = apiKey;
+      }
 
       // step2 checkstr
       const response = await axios.post("/api/str_operation", {

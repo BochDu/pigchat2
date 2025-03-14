@@ -57,7 +57,7 @@ def convert_utf8_to_emoji():
 
         utf8_str = data.get('utf8_str')
         timestamp_str = data.get('timestamp')
-        password = data.get('password', '')
+        password = data.get('password')
 
         if utf8_str is None or timestamp_str is None:
             return jsonify({"error": "Missing required parameters"}), 400
@@ -66,6 +66,9 @@ def convert_utf8_to_emoji():
             timestamp = int(timestamp_str)
         except (ValueError, TypeError):
             return jsonify({"error": "Timestamp must be an integer"}), 400
+
+        if password is None:
+            password = ''
 
         result = pigchat.utf8_to_emoji(utf8_str, timestamp, password)
         return jsonify({"result": result})
@@ -81,7 +84,7 @@ def convert_emoji_to_utf8():
 
         emoji_str = data.get('emoji_str')
         timestamp_str = data.get('timestamp')
-        password = data.get('password', '')
+        password = data.get('password')
 
         if emoji_str is None or timestamp_str is None:
             return jsonify({"error": "Missing required parameters"}), 400
@@ -90,6 +93,9 @@ def convert_emoji_to_utf8():
             timestamp = int(timestamp_str)
         except (ValueError, TypeError):
             return jsonify({"error": "Timestamp must be an integer"}), 400
+
+        if password is None:
+            password = ''
 
         result = pigchat.emoji_to_utf8(emoji_str, timestamp, password)
         return jsonify({"result": result})
