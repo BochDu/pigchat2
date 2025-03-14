@@ -300,7 +300,7 @@ body::-webkit-scrollbar {
 .chat-room {
   display: flex;
   flex-direction: column;
-  height: calc(95vh - 80px);
+  height: calc(100% - 2rem);
   background: white;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
