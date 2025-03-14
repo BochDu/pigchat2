@@ -11,6 +11,8 @@ from core import pigtime
 
 app = Flask(__name__)
 
+pigchat_class = pigchat.set_pigchat_class('shadow')
+
 @app.route('/get_pig_timestamp', methods=['GET'])
 def api_get_pig_timestamp():
     try:
@@ -42,8 +44,7 @@ def api_str_operation():
         input_str = data.get('input_str')
         if input_str is None:
             return jsonify({"error": "Missing 'input_str' parameter"}), 400
-
-        result = pigchat.determine_encryption_decryption(input_str)
+        result = pigchat.determine_encryption_decryption(input_str, pigchat_class)
         return jsonify({"result": result})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -70,7 +71,7 @@ def convert_utf8_to_emoji():
         if password is None:
             password = ''
 
-        result = pigchat.utf8_to_emoji(utf8_str, timestamp, password)
+        result = pigchat.utf8_to_emoji(utf8_str, timestamp, password, pigchat_class=pigchat_class)
         return jsonify({"result": result})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -97,7 +98,7 @@ def convert_emoji_to_utf8():
         if password is None:
             password = ''
 
-        result = pigchat.emoji_to_utf8(emoji_str, timestamp, password)
+        result = pigchat.emoji_to_utf8(emoji_str, timestamp, password, pigchat_class=pigchat_class)
         return jsonify({"result": result})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
