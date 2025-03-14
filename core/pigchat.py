@@ -48,21 +48,3 @@ def emoji_to_utf8(emoji_str, timestamp, password, pigchat_class):
     else:
         utf8_str = emoji_str
     return utf8_str
-
-
-def duplex_convert(candidate_str, timestamp, password, pigchat_class):
-    if pigchat_class.is_fancy(candidate_str):
-        # 解密
-        hex_str = pigchat_class.fancy2hex(candidate_str)
-        return pignum.pignum_to_utf8(hex_str, timestamp, password)
-    else:
-        # 加密
-        hex_str = pignum.utf8_to_pignum(candidate_str, timestamp, password)
-        return pigchat_class.hex2fancy(hex_str)
-
-if __name__ == '__main__':
-    user_input = ["hello world", "你好", "🍆🍉🌿😘完了", "🌹🥭🍯😚a"]
-    for u in user_input:
-        fancy = duplex_convert(u, 1618963200, '123456')
-        uu = duplex_convert(fancy, 1618963200, '123456')
-        print(f'{u} -> {fancy} -> {uu}')
