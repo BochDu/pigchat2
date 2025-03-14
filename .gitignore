@@ -2,4 +2,3 @@
 __pycache__
 project_pigchat_vue/dist/
 project_pigchat_vue/node_modules/
-project_pigchat_vue/package-lock.json
