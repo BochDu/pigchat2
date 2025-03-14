@@ -5,9 +5,6 @@ import secrets
 
 
 class FancyHex:
-    def __init__(self):
-        pass
-
     @classmethod
     @cache
     def index2fancy_candidate(cls) -> Dict[str, List[str]]:
