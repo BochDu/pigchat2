@@ -50,3 +50,10 @@ def duplex_convert(candidate_str, timestamp, password):
         # 加密
         hex_str = pignum.utf8_to_pignum(candidate_str, timestamp, password)
         return pigemoji.hex2fancy(hex_str)
+
+if __name__ == '__main__':
+    user_input = ["hello world", "你好", "🍆🍉🌿😘完了", "🌹🥭🍯😚a"]
+    for u in user_input:
+        fancy = duplex_convert(u, 1618963200, '123456')
+        uu = duplex_convert(fancy, 1618963200, '123456')
+        print(f'{u} -> {fancy} -> {uu}')
