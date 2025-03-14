@@ -32,8 +32,8 @@
     </main>
   </div>
 </template>
-
-<script setup>
+  
+  <script setup>
 import { ref, watch, onMounted } from "vue";
 import axios from "axios";
 import { ElMessage } from "element-plus";
@@ -78,8 +78,8 @@ watch(apiKey, (newValue) => {
   localStorage.setItem("apiKey", newValue);
 });
 </script>
-
-<style scoped>
+  
+  <style scoped>
 .layout {
   min-height: 100vh;
   height: 100vh;
@@ -247,11 +247,14 @@ watch(apiKey, (newValue) => {
   }
 
   .api-key-input {
-    width: 240px;
+    /* 增大输入框宽度，方便手机用户输入 */
+    width: 100%;
+    /* 调整输入框高度，增大触摸区域 */
+    height: 40px;
   }
 
   .api-key-input :deep(.el-input__wrapper) {
-    padding: 6px 12px;
+    padding: 8px 16px;
   }
 
   .api-key-input :deep(.view-icon) {
