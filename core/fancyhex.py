@@ -46,6 +46,11 @@ class FancyHex:
         return set(sum(emoji_pool, []))
 
     @classmethod
+    def fancy_duplicate_check(cls) -> bool:
+        fancy_set = cls.fancy_candidate_set()
+        return len(fancy_set) != len(cls.fancy_candidate_set())
+
+    @classmethod
     def hex2fancy(cls, hex_str: str) -> str:
         boar_emoji_string = ''
         for char in hex_str:
@@ -128,6 +133,7 @@ if __name__ == '__main__':
     hex_string = '1234567890abcdef'
     fancy_base = FancyHex.hex2fancy(hex_string)
     fancy_shadow = ShadowHex.hex2fancy(hex_string)
+    print(FancyHex.fancy_duplicate_check())
     print(f'convert result:\n {fancy_base}\n{fancy_shadow}')
     print(f'{fancy_base} is fancy: {FancyHex.is_fancy(fancy_base)}')
     print(f'{fancy_shadow} is fancy: {ShadowHex.is_fancy(fancy_shadow)}')
