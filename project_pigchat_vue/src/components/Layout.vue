@@ -27,13 +27,12 @@
       </div>
     </header>
     <main class="main-content">
-      <!-- 传递 apiKey 给子组件 -->
-      <slot :apiKey="apiKey"></slot>
+      <slot></slot>
     </main>
   </div>
 </template>
-  
-  <script setup>
+
+<script setup>
 import { ref, watch, onMounted } from "vue";
 import axios from "axios";
 import { ElMessage } from "element-plus";
@@ -73,13 +72,14 @@ onMounted(async () => {
   await getCurrentDate();
 });
 
-// 监听 apiKey 变化并保存到 localStorage
-watch(apiKey, (newValue) => {
+// 监听 apiKey 变化并保存到 localStorage，同时增加日志输出
+watch(apiKey, (newValue, oldValue) => {
+  console.log(`API Key 已更新，旧值: ${oldValue}，新值: ${newValue}`);
   localStorage.setItem("apiKey", newValue);
 });
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .layout {
   min-height: 100vh;
   height: 100vh;

@@ -10,8 +10,6 @@
             :class="{ 'with-emoji': message.isEmoji, selectable: canSelect }"
             @click.stop="handleMessageClick(index)"
           >
-            <!-- 移除时间显示 -->
-            <!-- <div class="message-time">{{ getCurrentTime() }}</div> -->
             <div
               class="message-content"
               :class="{
@@ -34,7 +32,6 @@
             v-model="inputText"
             placeholder="Start a new encrypted chat"
             @keyup.enter="handleSend"
-            @input="() => console.log('输入框的值:', inputText.value)"
             class="custom-textarea"
           ></textarea>
 
@@ -48,68 +45,16 @@
 </template>
   
   <script setup>
-import {
-  ref,
-  watch,
-  onMounted,
-  computed,
-  onUnmounted,
-  nextTick,
-  defineProps,
-} from "vue";
-import { Message, Position, ChatRound } from "@element-plus/icons-vue";
+import { ref, watch, onMounted, computed } from "vue";
 import Layout from "../components/Layout.vue";
 import { ElMessage } from "element-plus";
 import axios from "axios";
 
-// 接收父组件传递的 apiKey
-const props = defineProps({
-  apiKey: {
-    type: String,
-    default: "",
-  },
-});
-
 const messages = ref([]);
 const inputText = ref("");
-const canConvert = ref(false);
 const messagesContainer = ref(null);
 const selectedIndex = ref(-1);
 const canSelect = computed(() => messages.value.length >= 2);
-
-const getCurrentTime = () => {
-  const now = new Date();
-  const hours = now.getHours().toString().padStart(2, "0");
-  const minutes = now.getMinutes().toString().padStart(2, "0");
-  return `${hours}:${minutes}`;
-};
-
-const fetchPigTimestamp = async () => {
-  try {
-    const lastFetchTime = localStorage.getItem("lastPigTimestampFetch");
-    const now = Date.now();
-
-    // 检查是否需要重新获取（一天 = 24 * 60 * 60 * 1000 毫秒）
-    if (!lastFetchTime || now - parseInt(lastFetchTime) > 24 * 60 * 60 * 1000) {
-      const { data } = await axios.get("/api/get_pig_timestamp");
-
-      // 存储时间戳和最后获取时间
-      localStorage.setItem("pigTimestamp", data.pig_timestamp.toString());
-      localStorage.setItem("lastPigTimestampFetch", now.toString());
-
-      console.log("成功获取新的pig_timestamp:", data.pig_timestamp);
-    } else {
-      console.log("使用缓存的pig_timestamp");
-    }
-  } catch (error) {
-    console.error("获取pig_timestamp失败:", error);
-    ElMessage.error("野猪跑路了，服务遇到问题");
-  }
-};
-
-onMounted(async () => {
-  await fetchPigTimestamp(); // 确保在组件挂载时获取时间戳
-});
 
 const handleSend = async () => {
   // 保存输入的文本，避免后续清空操作影响
@@ -141,11 +86,8 @@ const handleSend = async () => {
         messages.value.push({
           content: inputValue,
           isEmoji: false,
-          time: getCurrentTime(),
-          canConvert: true,
           isUser: true,
         });
-        canConvert.value = true;
         selectedIndex.value = -1;
         inputText.value = ""; // 清空输入框
         scrollToBottom();
@@ -154,7 +96,7 @@ const handleSend = async () => {
         const { data } = await axios.post("/api/utf8_to_emoji", {
           utf8_str: inputValue,
           timestamp: timestamp,
-          password: props.apiKey,
+          password: localStorage.getItem("apiKey"),
         });
 
         console.log("接口返回的数据:", data); // 打印接口返回的数据
@@ -164,8 +106,6 @@ const handleSend = async () => {
           const newMessage = {
             content: data.result,
             isEmoji: true,
-            time: getCurrentTime(),
-            canConvert: true,
             isUser: false,
           };
           messages.value.push(newMessage);
@@ -182,11 +122,8 @@ const handleSend = async () => {
         messages.value.push({
           content: inputValue,
           isEmoji: false,
-          time: getCurrentTime(),
-          canConvert: true,
           isUser: true,
         });
-        canConvert.value = true;
         selectedIndex.value = -1;
         inputText.value = ""; // 清空输入框
         scrollToBottom();
@@ -195,7 +132,7 @@ const handleSend = async () => {
         const { data } = await axios.post("/api/emoji_to_utf8", {
           emoji_str: inputValue,
           timestamp: timestamp,
-          password: props.apiKey,
+          password: localStorage.getItem("apiKey"),
         });
 
         console.log("接口返回的数据:", data); // 打印接口返回的数据
@@ -210,8 +147,6 @@ const handleSend = async () => {
             const newMessage = {
               content: data.result,
               isEmoji: true,
-              time: getCurrentTime(),
-              canConvert: true,
               isUser: false,
             };
             messages.value.push(newMessage);
@@ -354,13 +289,6 @@ body::-webkit-scrollbar {
 
 .message-item.with-emoji {
   margin-bottom: 24px;
-}
-
-.message-time {
-  font-size: 12px;
-  color: #8a8a8a;
-  margin-bottom: 4px;
-  padding: 0 4px;
 }
 
 .message-content {
@@ -539,7 +467,8 @@ body::-webkit-scrollbar {
 }
 
 .send-button:hover:not(.dragging):not(.wiggle)::before {
-  box-shadow: 0 0 10px rgba(255, 154, 158, 0.6), 0 0 20px rgba(255, 154, 158, 0.4), 0 0 30px rgba(255, 154, 158, 0.2); /* 增加渐变的光影效果 */
+  box-shadow: 0 0 10px rgba(255, 154, 158, 0.6),
+    0 0 20px rgba(255, 154, 158, 0.4), 0 0 30px rgba(255, 154, 158, 0.2); /* 增加渐变的光影效果 */
   border-radius: 10px; /* 确保悬停时边框半径一致 */
 }
 
