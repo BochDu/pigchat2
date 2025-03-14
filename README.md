@@ -16,11 +16,23 @@
 - `PigChat.exe` (Windows平台)
 
 ### project_pigchat
-- `pigchat_gui.py`: PigChat GUI演示
+- `pigchat_gui.py`: PigChat GUI 演示
 
 ### project_pigchat_flask
-- `pigchat_server.py`: 野猪聊天HTTP服务
-- `pigchat_server.md`: 野猪聊天HTTP协议
+- `pigchat_server.py`: 野猪聊天 HTTP 服务
+- `pigchat_server.md`: 野猪聊天 HTTP 协议
+
+### project_pigchat_vue
+- 基于 Vue3 框架的野猪聊天 Web 应用程序
+- 依赖 project_pigchat_flask 服务
+- 在 project_pigchat_vue 目录运行:
+```
+npm install
+npm run dev
+```
+
+### pigchat_poster.jpg
+- PigChat 宣发海报
 
 ## 野猪加密流程
 
