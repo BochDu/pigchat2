@@ -496,7 +496,7 @@ body::-webkit-scrollbar {
   will-change: transform;
   border: none;
   outline: none;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* 使用贝塞尔曲线让过渡更平滑 */
 }
 
 .send-button::before {
@@ -508,20 +508,22 @@ body::-webkit-scrollbar {
   height: 100%;
   border-radius: 10px; /* 圆角矩形的圆角半径 */
   box-shadow: 0 0 0 rgba(255, 154, 158, 0);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* 使用贝塞尔曲线让过渡更平滑 */
   z-index: -1;
 }
 
 .send-button:not(.dragging):not(.wiggle) {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* 使用贝塞尔曲线让过渡更平滑 */
 }
 
 .send-button.dragging {
   cursor: grabbing;
+  transform: scale(1.05); /* 拖动时稍微放大按钮 */
 }
 
 .send-button.dragging::before {
   box-shadow: 0 0 20px rgba(255, 154, 158, 0.7);
+  border-radius: 10px; /* 确保拖动时边框半径一致 */
 }
 
 .send-button:hover:not(.dragging):not(.wiggle) {
@@ -529,20 +531,24 @@ body::-webkit-scrollbar {
 }
 
 .send-button:hover:not(.dragging):not(.wiggle)::before {
-  box-shadow: 0 0 30px rgba(255, 154, 158, 0.8);
+  box-shadow: 0 0 10px rgba(255, 154, 158, 0.6), 0 0 20px rgba(255, 154, 158, 0.4), 0 0 30px rgba(255, 154, 158, 0.2); /* 增加渐变的光影效果 */
+  border-radius: 10px; /* 确保悬停时边框半径一致 */
 }
 
 .send-button.wiggle::before {
   box-shadow: 0 0 30px rgba(255, 154, 158, 0.8);
+  border-radius: 10px; /* 确保抖动时边框半径一致 */
 }
 
 .send-button.wiggle {
   opacity: 1;
-  animation: wiggle 1s ease infinite;
+  animation: wiggle 1s ease-in-out infinite; /* 使用 ease-in-out 让抖动更自然 */
 }
 
 .send-button:active {
   outline: none;
+  background: #ffd0d0; /* 按下时改变背景颜色 */
+  transform: scale(0.95); /* 按下时稍微缩小按钮 */
 }
 
 .send-button:focus {
@@ -558,14 +564,17 @@ body::-webkit-scrollbar {
   0% {
     transform: rotate(0deg);
   }
-  25% {
-    transform: rotate(5deg);
+  20% {
+    transform: rotate(3deg); /* 调整角度，让抖动更自然 */
   }
-  50% {
-    transform: rotate(0deg);
+  40% {
+    transform: rotate(-3deg);
   }
-  75% {
-    transform: rotate(-5deg);
+  60% {
+    transform: rotate(2deg);
+  }
+  80% {
+    transform: rotate(-2deg);
   }
   100% {
     transform: rotate(0deg);
