@@ -83,24 +83,11 @@ class FancyHex:
 class ShadowHex(FancyHex):
     @classmethod
     def index2fancy_candidate(cls):
-        return {
-            '0': ['\U000E0100', '\U000E0101', '\U000E0102', '\U000E0103'],
-            '1': ['\U000E0104', '\U000E0105', '\U000E0106', '\U000E0107'],
-            '2': ['\U000E0108', '\U000E0109', '\U000E010A', '\U000E010B'],
-            '3': ['\U000E010C', '\U000E010D', '\U000E010E', '\U000E010F'],
-            '4': ['\U000E0110', '\U000E0111', '\U000E0112', '\U000E0113'],
-            '5': ['\U000E0114', '\U000E0115', '\U000E0116', '\U000E0117'],
-            '6': ['\U000E0118', '\U000E0119', '\U000E011A', '\U000E011B'],
-            '7': ['\U000E011C', '\U000E011D', '\U000E011E', '\U000E011F'],
-            '8': ['\U000E0120', '\U000E0121', '\U000E0122', '\U000E0123'],
-            '9': ['\U000E0124', '\U000E0125', '\U000E0126', '\U000E0127'],
-            'a': ['\U000E0128', '\U000E0129', '\U000E012A', '\U000E012B'],
-            'b': ['\U000E012C', '\U000E012D', '\U000E012E', '\U000E012F'],
-            'c': ['\U000E0130', '\U000E0131', '\U000E0132', '\U000E0133'],
-            'd': ['\U000E0134', '\U000E0135', '\U000E0136', '\U000E0137'],
-            'e': ['\U000E0138', '\U000E0139', '\U000E013A', '\U000E013B'],
-            'f': ['\U000E013C', '\U000E013D', '\U000E013E', '\U000E013F']
-        }
+        res = {}
+        begin = '\U000E0100'
+        for i in range(16):
+            res[str(hex(i))[2]] = [chr(ord(begin) + i * 4 + j) for j in range(4)]
+        return res
 
     @classmethod
     def emoji_pool(cls):
@@ -128,7 +115,7 @@ if __name__ == '__main__':
     hex_string = '1234567890abcdef'
     fancy_base = FancyHex.hex2fancy(hex_string)
     fancy_shadow = ShadowHex.hex2fancy(hex_string)
-    print(f'convert result:\n {fancy_base}\n{fancy_shadow}')
+    print(f'convert result:\n{fancy_base}\n{fancy_shadow}')
     print(f'{fancy_base} is fancy: {FancyHex.is_fancy(fancy_base)}')
     print(f'{fancy_shadow} is fancy: {ShadowHex.is_fancy(fancy_shadow)}')
     print(f'{fancy_base} hex: {FancyHex.fancy2hex(fancy_base)}')
