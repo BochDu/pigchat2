@@ -22,18 +22,11 @@ except Exception as e:
 
 
 def toggle_encrypt_decrypt():
-    timestamp = pigtime.get_pig_timestamp()
-    pigchat_class = pigchat.set_pigchat_class('fancy')
     input_text = entry.get("1.0", tk.END).strip()
-    action_mode = pigchat.determine_encryption_decryption(input_text, pigchat_class)
     
-    if action_mode == 'encrypt':
-        output_text = pigchat.utf8_to_emoji(input_text, timestamp, password=password_var.get(), pigchat_class=pigchat_class)
-    elif action_mode == 'decrypt':
-        output_text = pigchat.emoji_to_utf8(input_text, timestamp, password=password_var.get(), pigchat_class=pigchat_class)
-    else:
-        output_text = input_text
-    
+    timestamp = pigtime.get_pig_timestamp()
+    output_text = pigchat.duplex_convert(input_text, timestamp, password=password_var.get(),strategy='limit', mode='emoji')
+
     entry.delete("1.0", tk.END)
     entry.insert("1.0", output_text)
 
