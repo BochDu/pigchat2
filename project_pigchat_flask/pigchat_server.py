@@ -1,5 +1,6 @@
 import sys
 import os
+import traceback
 from flask import Flask, request, jsonify
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -10,9 +11,11 @@ from core import pigchat
 from core import pigtime
 
 app = Flask(__name__)
+app.config['MODE'] = "shadow"
+app.config['STRATEGY'] = "capacity"
 
 
-@app.route('/get_pig_timestamp', methods=['GET'])
+@app.route('/pigtime', methods=['GET'])
 def api_get_pig_timestamp():
     try:
         year = request.args.get('year')
@@ -27,33 +30,24 @@ def api_get_pig_timestamp():
             day = int(day)
 
         result = pigtime.get_pig_timestamp(year, month, day)
-        return jsonify({"pig_timestamp": result})
+        return jsonify({"pigtime": result})
     except ValueError:
         return jsonify({"error": "Year, month, and day must be valid integers."}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-
-@app.route('/str_operation', methods=['POST'])
-def api_str_operation():
-    return {"result": "encrypt"}
-
-
-@app.route('/utf8_to_emoji', methods=['POST'])
-@app.route('/emoji_to_utf8', methods=['POST'])
+    
 @app.route('/duplex', methods=['POST'])
-@app.route('/duplex', methods=['POST'])
-def duplex_convert():
+def convert_utf8_to_emoji():
     try:
         data = request.get_json()
         if data is None:
             return jsonify({"error": "No JSON data provided"}), 400
 
-        user_input_str = data.get('user_input_str')
+        input_str = data.get('input_str')
         timestamp_str = data.get('timestamp')
         password = data.get('password')
 
-        if user_input_str is None or timestamp_str is None:
+        if input_str is None or timestamp_str is None:
             return jsonify({"error": "Missing required parameters"}), 400
 
         try:
@@ -64,9 +58,10 @@ def duplex_convert():
         if password is None:
             password = ''
 
-        result = pigchat.duplex_convert(user_input_str, timestamp, password)
+        result = pigchat.duplex_convert(input_str, timestamp, password, strategy=app.config['STRATEGY'], mode=app.config['MODE'])
         return jsonify({"result": result})
     except Exception as e:
+        traceback.print_exception(e)
         return jsonify({"error": str(e)}), 500
 
 

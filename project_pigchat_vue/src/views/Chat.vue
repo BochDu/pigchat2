@@ -60,16 +60,16 @@ const handleSend = async () => {
   // 保存输入的文本，避免后续清空操作影响
   const inputValue = inputText.value.trim();
   if (inputValue) {
-    // step1 getpigtime
+    // step1 pigtime
     try {
-      // 每次都获取最新的时间戳
-      const { data } = await axios.get("/api/get_pig_timestamp");
-      const timestamp = data.pig_timestamp.toString();
+      const { data: pigtime } = await axios.get("/api/pigtime");
+      const timestamp = pigtime.pigtime.toString();
       if (!timestamp) {
         ElMessage.error("野猪跑路了，服务遇到问题");
         return;
       }
-
+      console.log("pigtime", timestamp);
+      // step2 get apiKey
       const apiKey = localStorage.getItem("apiKey");
       let password;
       if (apiKey === "none" || !apiKey) {
@@ -77,102 +77,50 @@ const handleSend = async () => {
       } else {
         password = apiKey;
       }
+      console.log("apiKey", apiKey);
 
-      // step2 checkstr
-      const response = await axios.post("/api/str_operation", {
-        input_str: inputValue,
+      // step3 push inputText
+      messages.value.push({
+        content: inputValue,
+        isEmoji: false,
+        isUser: true,
       });
+      selectedIndex.value = -1;
+      inputText.value = ""; // 清空输入框
+      scrollToBottom();
 
-      // 从响应中获取 result 字段
-      const result = response.data.result;
+      // step4 change
+      const { data: result } = await axios.post("/api/duplex", {
+        input_str: inputValue,
+        timestamp: timestamp,
+        password: password,
+      });
+      console.log("inputValue", inputValue);
+      console.log("result", result); // 打印接口返回的数据
 
-      if (result === "encrypt") {
-        // 字符串不包含字典里emoji的情况
-        console.log("字符串不包含字典里emoji，需要进行加密操作");
+      // step5 check
+      if (result && result.result === "") {
+        // 所有不满足shadow密文的消息都可以加密
+        // 满足shadow密文解密不出来会返回空
+        // 注意配置的app.config的模式和策略
+        // 不同策略模式此处情况需要具体分析
 
-        // step3 push send_str
-        messages.value.push({
-          content: inputValue,
-          isEmoji: false,
-          isUser: true,
-        });
-        selectedIndex.value = -1;
-        inputText.value = ""; // 清空输入框
+        // shadow模式 capacity策略时弹窗
+        ElMessage.error("野猪不会，时间或密钥错误");
+        messages.value.pop();
         scrollToBottom();
-
-        // step4 change
-        const { data } = await axios.post("/api/utf8_to_emoji", {
-          utf8_str: inputValue,
-          timestamp: timestamp,
-          password: password,
-        });
-
-        console.log("接口返回的数据:", data); // 打印接口返回的数据
-
-        // step5 push rec_str
-        if (data && data.result) {
-          const newMessage = {
-            content: data.result,
-            isEmoji: true,
-            isUser: false,
-          };
-          messages.value.push(newMessage);
-          console.log("添加的新消息:", newMessage);
-          scrollToBottom();
-        } else {
-          console.error("接口返回数据格式错误:", data);
-        }
-      } else if (result === "decrypt") {
-        // 字符串全由字典里emoji组成的情况
-        console.log("字符串全由字典里emoji组成，需要进行解密操作");
-
-        // step3 push send_str
-        messages.value.push({
-          content: inputValue,
-          isEmoji: false,
-          isUser: true,
-        });
-        selectedIndex.value = -1;
-        inputText.value = ""; // 清空输入框
-        scrollToBottom();
-
-        // step4 change
-        const { data } = await axios.post("/api/emoji_to_utf8", {
-          emoji_str: inputValue,
-          timestamp: timestamp,
-          password: password,
-        });
-
-        console.log("接口返回的数据:", data); // 打印接口返回的数据
-        if (data && data.result === "") {
-          ElMessage.error("野猪不会，时间或密钥错误");
-          messages.value.pop();
-          // 可根据需要滚动到合适的位置，这里简单处理为滚动到倒数第二条消息
-          scrollToBottom();
-        } else {
-          // step5 push rec_str
-          if (data && data.result) {
-            const newMessage = {
-              content: data.result,
-              isEmoji: true,
-              isUser: false,
-            };
-            messages.value.push(newMessage);
-            console.log("添加的新消息:", newMessage);
-            scrollToBottom();
-          } else {
-            console.error("接口返回数据格式错误:", data);
-          }
-        }
-        // 这里可以添加解密相关的逻辑，如果有的话
       } else {
-        // 其他情况，视为异常
-        ElMessage.error("野猪看不懂，去除emoji试试");
-
-        return;
+        // step6 push outputText
+        const newMessage = {
+          content: result.result,
+          isEmoji: true,
+          isUser: false,
+        };
+        messages.value.push(newMessage);
+        scrollToBottom();
       }
     } catch (error) {
-      console.error("转换失败:", error);
+      console.error("请求出现错误:", error);
       ElMessage.error("野猪跑路了，服务遇到问题");
     }
   }

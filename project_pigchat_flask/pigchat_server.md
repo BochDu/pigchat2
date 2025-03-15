@@ -8,7 +8,7 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 
 ### 获取野猪时间戳
 
-- **URL**: `http://127.0.0.1:5001/get_pig_timestamp`
+- **URL**: `http://127.0.0.1:5001/pigtime`
 - **请求方式**: `GET`
 - **注意事项**: 请求体非必须，采用本地时间无需请求体，指定时间需要传入年月日
 
@@ -26,51 +26,26 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 
 ```json
 {
-    "pig_timestamp": 1741381388
+    "pigtime": 1741381388
 }
 ```
 
-### 判断字符串操作
+### UTF-8 与 密文 互转
 
-- **URL**: `http://127.0.0.1:5001/str_operation`
+- **URL**: `http://127.0.0.1:5001/duplex`
 - **请求方式**: `POST`
-- **注意事项**: 
-  - 若判断通过 `result` 返回 `encrypt` 或 `decrypt`
-  - 字符串不包含字典里emoji - `encrypt`
-  - 字符串全由字典里emoji组成 - `decrypt`
-  - 若响应 `result` 内容为空则字符串异常不建议操作
-
-**请求体示例**:
-
-```json
-{
-    "input_str": "将军"
-}
-```
-
-**响应示例**:
-
-```json
-{
-    "result": "encrypt"
-}
-```
-
-### UTF-8 转换为 Emoji
-
-- **URL**: `http://127.0.0.1:5001/utf8_to_emoji`
-- **请求方式**: `POST`
-- **响应内容**: 具有随机性，响应结果与示例不一致为正常现象
+- **响应内容**: 密文具有随机性，响应结果与示例不一致为正常现象
 - **注意事项**:
-  - 若 `utf8_str` 为UTF-8编码 `result` 返回加密后结果
-  - 若请求缺少 `password` 的时候，密钥默认采用空字符串
-  - 注意emoji表情也是utf-8编码，算合法参数可以加密
+    - 若请求缺少 `password` 的时候，密钥默认采用空字符串
+    - 若响应 `result` 内容 `""` 或 与 `input_str` 一致，可能发生了错误，具体细节与密文转换策略有关
+
+#### UTF-8 转 密文
 
 **请求体示例**:
 
 ```json
 {
-    "utf8_str": "将军",
+    "input_str": "将军",
     "timestamp": "1741208586",
     "password": "my_password"
 }
@@ -80,25 +55,18 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 
 ```json
 {
-    "result": "😉󠄃󠄴󠄊󠄤󠄳󠄜󠄀󠄴󠄳󠄜󠄑󠄋"
+    "result": "🌱󠄃󠄵󠄈󠄤󠄰󠄜󠄀󠄵󠄰󠄟󠄑󠄈"
 }
 ```
 
-### Emoji 转换为 UTF-8
-
-- **URL**: `http://127.0.0.1:5001/emoji_to_utf8`
-- **请求方式**: `POST`
-- **注意事项**: 
-  - 若响应 `result` 为空，解密失败时间和密钥有误
-  - 若响应 `result` 与 `emoji_str` 字符串相同，说明 `emoji_str` 有emoji字典外的字符
-  - 若请求缺少 `password` 的时候，密钥默认采用空字符串
+#### 密文 转 UTF-8
 
 **请求体示例**:
 
 ```json
 {
-    "emoji_str": "😉󠄃󠄴󠄊󠄤󠄳󠄜󠄀󠄴󠄳󠄜󠄑󠄋",
-    "timestamp": 1741208586,
+    "input_str": "🌱󠄃󠄵󠄈󠄤󠄰󠄜󠄀󠄵󠄰󠄟󠄑󠄈",
+    "timestamp": "1741208586",
     "password": "my_password"
 }
 ```
