@@ -25,4 +25,12 @@
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
+/* 解决 iOS 输入框点击后自动放大的问题 */
+input, textarea {
+  font-size: 16px !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%; /* 禁止 iOS Safari 自动调整文本大小 */
+}
 </style>
