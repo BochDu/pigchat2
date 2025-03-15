@@ -11,7 +11,8 @@ from core import pigchat
 from core import pigtime
 
 app = Flask(__name__)
-app.config['MODE'] = "shadow"
+# app.config['MODE'] = "shadow"
+app.config['MODE'] = "emoji"
 app.config['STRATEGY'] = "capacity"
 
 
