@@ -126,9 +126,7 @@ const goToSICP = () => {
   align-items: center;
   font-size: 0.8rem;
   line-height: 1;
-  margin-left: 0.5rem;
   margin-top: 0.3rem;
-  width: 60px;
 }
 
 .time {
