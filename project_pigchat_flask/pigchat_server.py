@@ -1,5 +1,6 @@
 import sys
 import os
+import traceback
 from flask import Flask, request, jsonify
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -10,6 +11,7 @@ from core import pigchat
 from core import pigtime
 
 app = Flask(__name__)
+app.config['MODE'] = "shadow"
 
 
 @app.route('/get_pig_timestamp', methods=['GET'])
@@ -42,18 +44,17 @@ def api_str_operation():
 @app.route('/utf8_to_emoji', methods=['POST'])
 @app.route('/emoji_to_utf8', methods=['POST'])
 @app.route('/duplex', methods=['POST'])
-@app.route('/duplex', methods=['POST'])
-def duplex_convert():
+def convert_utf8_to_emoji():
     try:
         data = request.get_json()
         if data is None:
             return jsonify({"error": "No JSON data provided"}), 400
 
-        user_input_str = data.get('user_input_str')
+        utf8_str = data.get('utf8_str')
         timestamp_str = data.get('timestamp')
         password = data.get('password')
 
-        if user_input_str is None or timestamp_str is None:
+        if utf8_str is None or timestamp_str is None:
             return jsonify({"error": "Missing required parameters"}), 400
 
         try:
@@ -64,11 +65,12 @@ def duplex_convert():
         if password is None:
             password = ''
 
-        result = pigchat.duplex_convert(user_input_str, timestamp, password)
+        result = pigchat.duplex_convert(utf8_str, timestamp, password, mode=app.config['MODE'])
         return jsonify({"result": result})
     except Exception as e:
+        traceback.print_exception(e)
         return jsonify({"error": str(e)}), 500
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5001)
+    app.run(host='127.0.0.1', port=5000)
