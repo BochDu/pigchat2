@@ -11,10 +11,6 @@ from core import pigtime
 
 app = Flask(__name__)
 
-<<<<<<< HEAD
-pigchat_class = pigchat.set_pigchat_class('shadow')
-=======
->>>>>>> 0a318b6 (feat: pigchat)
 
 @app.route('/get_pig_timestamp', methods=['GET'])
 def api_get_pig_timestamp():
@@ -42,69 +38,22 @@ def api_get_pig_timestamp():
 def api_str_operation():
     return {"result": "encrypt"}
 
-<<<<<<< HEAD
-        input_str = data.get('input_str')
-        if input_str is None:
-            return jsonify({"error": "Missing 'input_str' parameter"}), 400
-        result = pigchat.determine_encryption_decryption(input_str, pigchat_class)
-        return jsonify({"result": result})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/utf8_to_emoji', methods=['POST'])
-def convert_utf8_to_emoji():
-    try:
-        data = request.get_json()
-        if data is None:
-            return jsonify({"error": "No JSON data provided"}), 400
-
-        utf8_str = data.get('utf8_str')
-        timestamp_str = data.get('timestamp')
-        password = data.get('password')
-
-        if utf8_str is None or timestamp_str is None:
-            return jsonify({"error": "Missing required parameters"}), 400
-
-        try:
-            timestamp = int(timestamp_str)
-        except (ValueError, TypeError):
-            return jsonify({"error": "Timestamp must be an integer"}), 400
-
-        if password is None:
-            password = ''
-
-        result = pigchat.utf8_to_emoji(utf8_str, timestamp, password, pigchat_class=pigchat_class)
-        return jsonify({"result": result})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/emoji_to_utf8', methods=['POST'])
-def convert_emoji_to_utf8():
-=======
 
 @app.route('/utf8_to_emoji', methods=['POST'])
 @app.route('/emoji_to_utf8', methods=['POST'])
 @app.route('/duplex', methods=['POST'])
+@app.route('/duplex', methods=['POST'])
 def duplex_convert():
->>>>>>> 0a318b6 (feat: pigchat)
     try:
         data = request.get_json()
         if data is None:
             return jsonify({"error": "No JSON data provided"}), 400
 
-<<<<<<< HEAD
-        emoji_str = data.get('emoji_str')
-        timestamp_str = data.get('timestamp')
-        password = data.get('password')
-
-        if emoji_str is None or timestamp_str is None:
-=======
         user_input_str = data.get('user_input_str')
         timestamp_str = data.get('timestamp')
         password = data.get('password')
 
         if user_input_str is None or timestamp_str is None:
->>>>>>> 0a318b6 (feat: pigchat)
             return jsonify({"error": "Missing required parameters"}), 400
 
         try:
@@ -115,18 +64,11 @@ def duplex_convert():
         if password is None:
             password = ''
 
-<<<<<<< HEAD
-        result = pigchat.emoji_to_utf8(emoji_str, timestamp, password, pigchat_class=pigchat_class)
-=======
         result = pigchat.duplex_convert(user_input_str, timestamp, password)
->>>>>>> 0a318b6 (feat: pigchat)
         return jsonify({"result": result})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 0a318b6 (feat: pigchat)
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5001)
