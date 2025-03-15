@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config['MODE'] = "shadow"
 
 
-@app.route('/get_pig_timestamp', methods=['GET'])
+@app.route('/pigtime', methods=['GET'])
 def api_get_pig_timestamp():
     try:
         year = request.args.get('year')
@@ -29,7 +29,7 @@ def api_get_pig_timestamp():
             day = int(day)
 
         result = pigtime.get_pig_timestamp(year, month, day)
-        return jsonify({"pig_timestamp": result})
+        return jsonify({"pigtime": result})
     except ValueError:
         return jsonify({"error": "Year, month, and day must be valid integers."}), 400
     except Exception as e:

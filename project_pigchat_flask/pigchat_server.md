@@ -8,7 +8,7 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 
 ### 获取野猪时间戳
 
-- **URL**: `http://127.0.0.1:5001/get_pig_timestamp`
+- **URL**: `http://127.0.0.1:5001/pigtime`
 - **请求方式**: `GET`
 - **注意事项**: 请求体非必须，采用本地时间无需请求体，指定时间需要传入年月日
 
@@ -26,7 +26,7 @@ PigChat Server 是一个用于处理野猪聊天的HTTP服务
 
 ```json
 {
-    "pig_timestamp": 1741381388
+    "pigtime": 1741381388
 }
 ```
 
