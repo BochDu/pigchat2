@@ -26,8 +26,11 @@
         </el-input>
       </div>
     </header>
-    <!-- 新增显示信息的区域 -->
-    <div :class="{ 'message-box': true, 'message-box--visible': showMessage }">
+    <!-- 新增显示信息的区域，添加 @click 事件 -->
+    <div
+      :class="{ 'message-box': true, 'message-box--visible': showMessage }"
+      @click="handleMessageBoxClick"
+    >
       <div v-html="formattedMessages"></div>
     </div>
     <main class="main-content">
@@ -127,6 +130,11 @@ watch(apiKey, (newValue, oldValue) => {
 const handleClick = () => {
   console.log("你点击了 PigChat 标题或图标");
   showMessage.value = !showMessage.value;
+};
+
+// 点击介绍容器的处理函数
+const handleMessageBoxClick = () => {
+  showMessage.value = false;
 };
 </script>
 
