@@ -8,7 +8,6 @@
             :key="index"
             class="message-item"
             :class="{ 'with-emoji': message.isEmoji, selectable: canSelect }"
-            @click.stop="handleMessageClick(index)"
           >
             <div
               class="message-content"
@@ -16,9 +15,10 @@
                 'is-emoji': message.isEmoji,
                 selected: selectedIndex === index,
                 selectable: canSelect,
-                'user-message': message.isUser, // 用户发送的消息添加 user-message 类
-                'reply-message': !message.isUser, // 回复的消息添加 reply-message 类
+                'user-message': message.isUser,
+                'reply-message': !message.isUser,
               }"
+              @click.stop="handleMessageClick(index)"
             >
               {{ message.content }}
             </div>
@@ -43,8 +43,8 @@
     </div>
   </Layout>
 </template>
-  
-  <script setup>
+
+<script setup>
 import { ref, watch, onMounted, computed } from "vue";
 import Layout from "../components/Layout.vue";
 import { ElMessage } from "element-plus";
