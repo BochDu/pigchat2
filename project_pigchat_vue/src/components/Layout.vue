@@ -5,10 +5,7 @@
         <img src="../assets/wild_boar.png" alt="PigChat Logo" class="logo" />
         <h1 class="title">PigChat</h1>
         <div class="date-container">
-          <span class="year">{{ currentYear }}</span>
-          <span class="month-day"
-            >{{ currentMonth }}<span class="day">{{ currentDay }}</span></span
-          >
+          <span class="year">{{ currentDate }}</span>
         </div>
       </div>
       <div class="header-right">
@@ -32,11 +29,10 @@
 import { ref, watch, onMounted } from "vue";
 import axios from "axios";
 import { ElMessage } from "element-plus";
+import moment from "moment";
 
 const apiKey = ref(localStorage.getItem("apiKey") || "");
-const currentYear = ref("");
-const currentMonth = ref("");
-const currentDay = ref("");
+const currentDate = ref("");
 
 const getCurrentDate = async () => {
   try {
@@ -47,12 +43,7 @@ const getCurrentDate = async () => {
       return;
     }
     const date = new Date(parseInt(timestamp) * 1000);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    currentYear.value = year;
-    currentMonth.value = month;
-    currentDay.value = day;
+    currentDate.value = moment(date).format('DD MMM');
   } catch (error) {
     ElMessage.error("野猪跑路了，服务遇到问题");
     console.error(error);
@@ -130,6 +121,7 @@ watch(apiKey, (newValue, oldValue) => {
   font-size: 0.8rem;
   line-height: 1;
   margin-left: 0.5rem;
+  margin-top: 0.3rem;
   width: 60px;
 }
 
