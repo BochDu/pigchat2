@@ -40,8 +40,8 @@ const currentDay = ref("");
 
 const getCurrentDate = async () => {
   try {
-    const { data } = await axios.get("/api/get_pig_timestamp");
-    const timestamp = data.pig_timestamp.toString();
+    const { data } = await axios.get("/api/pigtime");
+    const timestamp = data.pigtime.toString();
     if (!timestamp) {
       ElMessage.error("野猪跑路了，服务遇到问题");
       return;
