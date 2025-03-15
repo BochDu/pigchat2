@@ -17,7 +17,7 @@
 
 ### project_pigchat
 - `pigchat_gui.py`: PigChat GUI 演示
-- 采用 fancy 编码，详细规则见下文
+- 采用 emoji 编码，详细规则见下文
 
 ### project_pigchat_flask
 - `pigchat_server.py`: 野猪聊天 HTTP 服务
@@ -64,7 +64,7 @@ npm run dev
 
 ### 密文编码规则
 
-1.野猪 emoji 编码 --- fancy 编码
+1.野猪 emoji 编码 --- emoji 编码
 - 野猪Emoji字典随机匹配十六进制字符得到密文
 
 2.隐藏 emoji 编码 --- shadow 编码
