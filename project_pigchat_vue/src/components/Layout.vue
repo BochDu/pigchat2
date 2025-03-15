@@ -1,8 +1,8 @@
 <template>
   <div class="layout">
     <header class="header">
-      <div class="header-left">
-        <img src="../assets/wild_boar.png" alt="PigChat Logo" class="logo" />
+      <div class="header-left" @click="goToSICP">
+        <img src="../assets/wild_boar.png" alt="PigChat Logo" class="logo">
         <h1 class="title">PigChat</h1>
         <div class="date-container">
           <span class="year">{{ currentDate }}</span>
@@ -58,6 +58,11 @@ watch(apiKey, (newValue, oldValue) => {
   console.log(`API Key 已更新，旧值: ${oldValue}，新值: ${newValue}`);
   localStorage.setItem("apiKey", newValue);
 });
+
+const goToSICP = () => {
+  window.open("https://sicp.online", "_blank");
+}
+
 </script>
 
 <style scoped>
@@ -90,6 +95,7 @@ watch(apiKey, (newValue, oldValue) => {
 }
 
 .header-left {
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.5rem;
