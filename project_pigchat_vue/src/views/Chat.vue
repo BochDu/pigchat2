@@ -183,6 +183,7 @@ const handleBlur = () => {
   setTimeout(() => {
     window.scrollTo(0, 0);  // 关闭输入框后恢复页面
   }, 300);
+};
 
 watch(
   messages,
