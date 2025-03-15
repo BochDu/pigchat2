@@ -1,50 +1,35 @@
+from typing import Optional
+
+from .fancyhex import FancyHex, ShadowHex
 from . import pignum
 
-# CHOOSE FANCYHEX CLASS
 
-def set_pigchat_class(condition):
-    if condition == 'fancy':
-        from .fancyhex import FancyHex
-        return FancyHex
-    elif condition == 'shadow':
-        from .fancyhex import ShadowHex
-        return ShadowHex
+def duplex_convert(candidate_str, timestamp, password, encrypt: Optional[bool] = None, mode: str = 'emoji'):
+    if mode == 'emoji':
+        fancy_convert = FancyHex
+    elif mode == 'shadow':
+        fancy_convert = ShadowHex
     else:
-        return None
-
-# CHECK UTF-8
-
-
-def is_utf8_encoded(utf8_str):
-    try:
-        utf8_str.encode('utf-8')
-        return True
-    except UnicodeEncodeError:
-        return False
-
-# PIG NUM
-# utf8_str - hex_str - emoji_str
-
-def determine_encryption_decryption(str, pigchat_class):
-    if pigchat_class.no_fancy(str):
-        return 'encrypt'
-    elif pigchat_class.is_fancy(str):
-        return 'decrypt'
+        raise ValueError('mode must be "emoji" or "shadow"')
+    if encrypt is None:
+        encrypt = not fancy_convert.is_fancy(candidate_str)
+    if encrypt:
+        # 加密
+        hex_str = pignum.utf8_to_pignum(candidate_str, timestamp, password)
+        return fancy_convert.hex2fancy(hex_str)
     else:
-        return ''
+        # 解密
+        hex_str = fancy_convert.fancy2hex(candidate_str)
+        return pignum.pignum_to_utf8(hex_str, timestamp, password)
 
-def utf8_to_emoji(utf8_str, timestamp, password, pigchat_class):
-    if is_utf8_encoded(utf8_str):
-        hex_str = pignum.utf8_to_pignum(utf8_str, timestamp, password)
-        emoji_str = pigchat_class.hex2fancy(hex_str)
-    else:
-        emoji_str = ''
-    return emoji_str
 
-def emoji_to_utf8(emoji_str, timestamp, password, pigchat_class):
-    if pigchat_class.is_fancy(emoji_str):
-        hex_str = pigchat_class.fancy2hex(emoji_str)
-        utf8_str = pignum.pignum_to_utf8(hex_str, timestamp, password)
-    else:
-        utf8_str = emoji_str
-    return utf8_str
+if __name__ == '__main__':
+    user_input = ["hello world", "你好", "🍆🍉🌿😘完了", "🌹🥭🍯😚haha"]
+    for u in user_input:
+        fancy = duplex_convert(u, 1618963200, '123456')
+        uu = duplex_convert(fancy, 1618963200, '123456')
+        print(f'{u} -> {fancy} -> {uu}')
+    for u in user_input:
+        fancy = duplex_convert(u, 1618963200, '123456', mode='shadow')
+        uu = duplex_convert(fancy, 1618963200, '123456', mode='shadow')
+        print(f'{u} -> {fancy} -> {uu}')
