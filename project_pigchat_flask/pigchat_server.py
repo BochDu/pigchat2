@@ -12,6 +12,7 @@ from core import pigtime
 
 app = Flask(__name__)
 app.config['MODE'] = "shadow"
+app.config['STRATEGY'] = "capacity"
 
 
 @app.route('/pigtime', methods=['GET'])
@@ -57,7 +58,7 @@ def convert_utf8_to_emoji():
         if password is None:
             password = ''
 
-        result = pigchat.duplex_convert(input_str, timestamp, password, mode=app.config['MODE'])
+        result = pigchat.duplex_convert(input_str, timestamp, password, strategy=app.config['STRATEGY'], mode=app.config['MODE'])
         return jsonify({"result": result})
     except Exception as e:
         traceback.print_exception(e)

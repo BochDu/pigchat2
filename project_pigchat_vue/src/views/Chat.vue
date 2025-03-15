@@ -100,6 +100,12 @@ const handleSend = async () => {
 
       // step5 check
       if (result && result.result === "") {
+        // 所有不满足shadow密文的消息都可以加密
+        // 满足shadow密文解密不出来会返回空
+        // 注意配置的app.config的模式和策略
+        // 不同策略模式此处情况需要具体分析
+
+        // shadow模式 capacity策略时弹窗
         ElMessage.error("野猪不会，时间或密钥错误");
         messages.value.pop();
         scrollToBottom();
