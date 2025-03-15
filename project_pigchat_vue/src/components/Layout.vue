@@ -2,8 +2,15 @@
   <div class="layout">
     <header class="header">
       <div class="header-left">
-        <img src="../assets/wild_boar.png" alt="PigChat Logo" class="logo"  @click="goToSICP">
-        <h1 class="title"  @click="goToSICP">PigChat</h1>
+        <!-- 添加 @click 事件 -->
+        <img
+          src="../assets/wild_boar.png"
+          alt="PigChat Logo"
+          class="logo"
+          @click="handleClick"
+        />
+        <!-- 添加 @click 事件 -->
+        <h1 class="title" @click="handleClick">PigChat</h1>
         <div class="date-container">
           <span class="time">{{ currentDate }}</span>
         </div>
@@ -19,6 +26,10 @@
         </el-input>
       </div>
     </header>
+    <!-- 新增显示信息的区域 -->
+    <div :class="{ 'message-box': true, 'message-box--visible': showMessage }">
+      <div v-html="formattedMessages"></div>
+    </div>
     <main class="main-content">
       <slot></slot>
     </main>
@@ -33,6 +44,51 @@ import moment from "moment";
 
 const apiKey = ref(localStorage.getItem("apiKey") || "");
 const currentDate = ref("");
+const showMessage = ref(false);
+const messages = ref([
+  {
+    title: "产品介绍",
+    content: [
+      "PigChat 是一款提供特殊编码服务的程序。",
+      "私人密钥和当天日期定制的编码算法遥遥领先。",
+    ],
+  },
+  {
+    title: "使用指南",
+    content: [
+      "- 建议填入密钥并妥善保管",
+      "- 输入原文或密文发送",
+      "- 点击消息框自动复制信息",
+      "- 密文仅支持当天日期内解密",
+    ],
+  },
+  {
+    title: "使用声明",
+    content: [
+      "本站仅提供编码服务，严禁参与违法活动或滥用",
+      "禁止一切网络入侵、数据窃取等网络非法活动",
+      "继续使用本站，即表示您同意遵守以上声明和条款",
+    ],
+  },
+  {
+    title: "项目介绍",
+    content: [
+      "项目代号 <野猪聊天> ",
+      "经历多轮方案讨论和产品迭代",
+      "于2025年3月15日正式部署上线",
+      'Github仓库 <a href="https://github.com/BochDu/pigchat2">https://github.com/BochDu/pigchat2</a>',
+    ],
+  },
+  {
+    title: "贡献个人及企业",
+    content: [
+      "BochDu、quaeast、SyZdog",
+      'SIB集团 <a href="https://sicp.online">https://sicp.online</a>',
+    ],
+  },
+]);
+
+const formattedMessages = ref("");
 
 const getCurrentDate = async () => {
   try {
@@ -52,6 +108,14 @@ const getCurrentDate = async () => {
 
 onMounted(async () => {
   await getCurrentDate();
+  formattedMessages.value = messages.value
+    .map(
+      (item) => `
+    <h3>${item.title}</h3>
+    <p>${item.content.map((line) => line + "<br>").join("")}</p>
+  `
+    )
+    .join("");
 });
 
 watch(apiKey, (newValue, oldValue) => {
@@ -59,14 +123,15 @@ watch(apiKey, (newValue, oldValue) => {
   localStorage.setItem("apiKey", newValue);
 });
 
-const goToSICP = () => {
-  window.open("https://sicp.online", "_blank");
-}
-
+// 点击事件处理函数
+const handleClick = () => {
+  console.log("你点击了 PigChat 标题或图标");
+  showMessage.value = !showMessage.value;
+};
 </script>
 
 <style scoped>
-/* 原有的样式代码保持不变 */
+/* 样式部分保持不变 */
 .layout {
   min-height: 100vh;
   height: 100vh;
@@ -197,6 +262,39 @@ const goToSICP = () => {
   box-sizing: border-box;
 }
 
+.message-box {
+  display: none;
+  background-color: #f0f0f0;
+  position: absolute;
+  top: 64px; /* 状态栏高度 */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  text-align: left; /* 修改为左对齐 */
+  font-size: 14px;
+  border-bottom: 1px solid #ccc;
+  z-index: 99; /* 确保在内容之上 */
+  color: #000; /* 字体颜色改为黑色 */
+  font-family: Arial, sans-serif; /* 选择一个好看的字体 */
+  line-height: 1.6; /* 增加行间距 */
+  letter-spacing: 0.5px; /* 增加字间距 */
+}
+
+.message-box h3 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.message-box p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.message-box--visible {
+  display: block;
+}
+
 @media (max-width: 768px) {
   .header {
     padding: 0.75rem;
@@ -226,6 +324,10 @@ const goToSICP = () => {
 
   .api-key-input :deep(.view-icon) {
     font-size: 14px;
+  }
+
+  .message-box {
+    top: 56px; /* 小屏幕状态栏高度 */
   }
 }
 </style>
