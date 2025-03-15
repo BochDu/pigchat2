@@ -95,19 +95,19 @@ class ShadowHex(FancyHex):
 
     @classmethod
     def hex2fancy(cls, hex_str: str) -> str:
-        return secrets.choice(cls.emoji_pool()) + super().hex2fancy(hex_str)
+        return super().hex2fancy(hex_str) + secrets.choice(cls.emoji_pool())
 
     @classmethod
     def fancy2hex(cls, fancy: str)->str:
-        return super().fancy2hex(fancy[1:])
+        return super().fancy2hex(fancy[:-1])
 
     @classmethod
     def is_fancy(cls, fancy: str)->bool:
-        return super().is_fancy(fancy[1:]) and fancy[0] in cls.emoji_pool()
+        return super().is_fancy(fancy[:-1]) and fancy[-1] in cls.emoji_pool()
 
     @classmethod
     def no_fancy(cls, fancy: str)->bool:
-        return super().no_fancy(fancy[1:])
+        return super().no_fancy(fancy[:-1])
 
 
 if __name__ == '__main__':
