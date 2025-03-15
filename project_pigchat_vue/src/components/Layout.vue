@@ -183,6 +183,8 @@ const handleClick = () => {
   color: #333;
   margin: 0;
   cursor: pointer;
+  /* 禁止选中文本 */
+  user-select: none;
 }
 
 .date-container {
@@ -198,6 +200,8 @@ const handleClick = () => {
 .time {
   color: #666;
   text-align: center;
+  /* 禁止选中文本 */
+  user-select: none;
 }
 
 .api-key-input {
