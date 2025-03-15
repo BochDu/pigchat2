@@ -5,7 +5,7 @@
         <img src="../assets/wild_boar.png" alt="PigChat Logo" class="logo" />
         <h1 class="title">PigChat</h1>
         <div class="date-container">
-          <span class="year">{{ currentDate }}</span>
+          <span class="time">{{ currentDate }}</span>
         </div>
       </div>
       <div class="header-right">
@@ -43,7 +43,7 @@ const getCurrentDate = async () => {
       return;
     }
     const date = new Date(parseInt(timestamp) * 1000);
-    currentDate.value = moment(date).format('DD MMM');
+    currentDate.value = moment(date).format("DD MMM");
   } catch (error) {
     ElMessage.error("野猪跑路了，服务遇到问题");
     console.error(error);
@@ -125,18 +125,9 @@ watch(apiKey, (newValue, oldValue) => {
   width: 60px;
 }
 
-.year {
+.time {
   color: #666;
   text-align: center;
-}
-
-.month-day {
-  color: #999;
-  text-align: center;
-}
-
-.day {
-  margin-left: 0px;
 }
 
 .api-key-input {
