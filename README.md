@@ -69,6 +69,6 @@ npm run dev
 
 2.隐藏 emoji 编码 --- shadow 编码
 - 变异选择器字典随机抽取代码点匹配十六进制字符得到密文
-- 从野猪Emoji字典随机选出一个表情拼接 Unicode 编码密文
+- Unicode 编码密文后面拼接野猪Emoji字典随机选出得 emoji
 - 实现原理：变异选择器能在其他 Unicode 代码点中 “隐藏” 一个字节数据，多个变异选择器可连接表示任意字节字符串
 - [参考文献](https://paulbutler.org/2025/smuggling-arbitrary-data-through-an-emoji/)
