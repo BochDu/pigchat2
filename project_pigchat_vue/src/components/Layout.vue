@@ -8,6 +8,7 @@
           class="logo"
           @click="handleClick"
           style="user-select: none"
+          draggable="false"
         />
         <h1 class="title" @click="handleClick">PigChat</h1>
         <div class="date-container">
@@ -30,8 +31,9 @@
       <div
         :class="{ 'message-box': true, 'message-box--visible': showMessage }"
         @click="handleMessageBoxClick"
+        draggable="false"
       >
-        <div v-html="formattedMessages"></div>
+        <div v-html="formattedMessages" draggable="false"></div>
       </div>
     </transition>
     <main class="main-content">
@@ -81,14 +83,14 @@ const messages = ref([
       "项目代号 <野猪聊天> ",
       "经历多轮方案讨论和产品迭代",
       "于2025年3月15日正式部署上线",
-      'Github仓库 <a href="https://github.com/BochDu/pigchat2">https://github.com/BochDu/pigchat2</a>',
+      'Github仓库 <a href="https://github.com/BochDu/pigchat2" draggable="false">https://github.com/BochDu/pigchat2</a>',
     ],
   },
   {
     title: "贡献个人及企业",
     content: [
       "BochDu、quaeast、SyZdog",
-      'SICP集团 <a href="https://sicp.online">https://sicp.online</a>',
+      'SICP集团 <a href="https://sicp.online" draggable="false">https://sicp.online</a>',
     ],
   },
 ]);
@@ -116,9 +118,9 @@ onMounted(async () => {
   formattedMessages.value = messages.value
     .map(
       (item) => `
-        <h3>${item.title}</h3>
-        <p>${item.content.map((line) => line + "<br>").join("")}</p>
-      `
+          <h3>${item.title}</h3>
+          <p>${item.content.map((line) => line + "<br>").join("")}</p>
+        `
     )
     .join("");
 });
@@ -143,7 +145,7 @@ const handleMessageBoxClick = (event) => {
 };
 </script>
   
-<style scoped>
+  <style scoped>
 /* 样式部分保持不变 */
 .layout {
   min-height: 100vh;
