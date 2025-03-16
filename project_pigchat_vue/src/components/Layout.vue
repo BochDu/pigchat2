@@ -2,14 +2,13 @@
   <div class="layout">
     <header class="header">
       <div class="header-left">
-        <!-- 添加 @click 事件 -->
         <img
           src="../assets/wild_boar.png"
           alt="PigChat Logo"
           class="logo"
           @click="handleClick"
+          style="user-select: none"
         />
-        <!-- 添加 @click 事件 -->
         <h1 class="title" @click="handleClick">PigChat</h1>
         <div class="date-container">
           <span class="time">{{ currentDate }}</span>
@@ -116,9 +115,9 @@ onMounted(async () => {
   formattedMessages.value = messages.value
     .map(
       (item) => `
-      <h3>${item.title}</h3>
-      <p>${item.content.map((line) => line + "<br>").join("")}</p>
-    `
+        <h3>${item.title}</h3>
+        <p>${item.content.map((line) => line + "<br>").join("")}</p>
+      `
     )
     .join("");
 });
