@@ -2,13 +2,13 @@
 
 安全聊天、猪言猪语、当日有效
 
-## PigChat网页版
+## PigChat 网页版
 
-PigChat网页版震撼发布，全新加密算法遥遥领先，可定制密钥满足不同场景，隔日销毁信息解码方式聊天更安心
+PigChat 网页版震撼发布，全新加密算法遥遥领先，可定制密钥满足不同场景，隔日销毁信息解码方式聊天更安心
 
-想要第一时间体验PigChat网页版全新加密算法吗？立即访问内测体验链接 -> [PigChat](https://sing.quaeast.com/)
+想要第一时间体验 PigChat 网页版全新加密算法吗？立即访问内测体验链接 -> [PigChat](https://sing.quaeast.com/)
 
-## PigChat本地版
+## PigChat 本地版
 ### 点击下载
 Windows -> [PigChat.exe](https://github.com/BochDu/pigchat2/raw/main/package/PigChat.exe)
 
