@@ -133,7 +133,10 @@ const handleClick = () => {
 };
 
 // 点击介绍容器的处理函数
-const handleMessageBoxClick = () => {
+const handleMessageBoxClick = (event) => {
+  if (event.target.tagName === "A") {
+    return;
+  }
   showMessage.value = false;
 };
 </script>
