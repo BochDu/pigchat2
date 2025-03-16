@@ -27,12 +27,14 @@
       </div>
     </header>
     <!-- 新增显示信息的区域，添加 @click 事件 -->
-    <div
-      :class="{ 'message-box': true, 'message-box--visible': showMessage }"
-      @click="handleMessageBoxClick"
-    >
-      <div v-html="formattedMessages"></div>
-    </div>
+    <transition name="message-box-fade">
+      <div
+        :class="{ 'message-box': true, 'message-box--visible': showMessage }"
+        @click="handleMessageBoxClick"
+      >
+        <div v-html="formattedMessages"></div>
+      </div>
+    </transition>
     <main class="main-content">
       <slot></slot>
     </main>
@@ -279,35 +281,48 @@ const handleMessageBoxClick = (event) => {
 
 .message-box {
   display: none;
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   position: absolute;
   top: 64px; /* 状态栏高度 */
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 10px;
+  padding: 20px;
   text-align: left; /* 修改为左对齐 */
   font-size: 14px;
   border-bottom: 1px solid #ccc;
   z-index: 99; /* 确保在内容之上 */
-  color: #000; /* 字体颜色改为黑色 */
+  color: #333; /* 字体颜色改为黑色 */
   font-family: Arial, sans-serif; /* 选择一个好看的字体 */
   line-height: 1.6; /* 增加行间距 */
   letter-spacing: 0.5px; /* 增加字间距 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
 
 .message-box h3 {
-  margin-top: 10px;
-  margin-bottom: 5px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #007bff;
 }
 
 .message-box p {
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .message-box--visible {
   display: block;
+}
+
+.message-box-fade-enter-active,
+.message-box-fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.message-box-fade-enter,
+.message-box-fade-leave-to {
+  opacity: 0;
 }
 
 @media (max-width: 768px) {
@@ -343,6 +358,7 @@ const handleMessageBoxClick = (event) => {
 
   .message-box {
     top: 56px; /* 小屏幕状态栏高度 */
+    padding: 15px;
   }
 }
 </style>
