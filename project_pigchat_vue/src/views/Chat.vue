@@ -38,7 +38,7 @@
           ></textarea>
 
           <el-button type="primary" @click="handleSend" class="send-button">
-            <img src="../assets/wild_boar.png" alt="Convert" class="pig-icon" />
+            <img src="../assets/wild_boar.png" class="pig-icon" />
           </el-button>
         </div>
       </div>
