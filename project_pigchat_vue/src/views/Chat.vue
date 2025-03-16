@@ -194,7 +194,7 @@ watch(
 );
 </script>
   
-  <style scoped>
+    <style scoped>
 /* 隐藏页面滚动条 */
 body {
   -ms-overflow-style: none; /* IE 和 Edge */
@@ -420,6 +420,11 @@ body::-webkit-scrollbar {
   box-shadow: 0 0 0 rgba(255, 154, 158, 0);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* 使用贝塞尔曲线让过渡更平滑 */
   z-index: -1;
+}
+
+/* 禁止选择占位符文本 */
+.custom-textarea::placeholder {
+  user-select: none;
 }
 
 .send-button:not(.dragging):not(.wiggle) {

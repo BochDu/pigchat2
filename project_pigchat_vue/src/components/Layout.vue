@@ -40,8 +40,8 @@
     </main>
   </div>
 </template>
-
-<script setup>
+  
+  <script setup>
 import { ref, watch, onMounted } from "vue";
 import axios from "axios";
 import { ElMessage } from "element-plus";
@@ -116,9 +116,9 @@ onMounted(async () => {
   formattedMessages.value = messages.value
     .map(
       (item) => `
-    <h3>${item.title}</h3>
-    <p>${item.content.map((line) => line + "<br>").join("")}</p>
-  `
+      <h3>${item.title}</h3>
+      <p>${item.content.map((line) => line + "<br>").join("")}</p>
+    `
     )
     .join("");
 });
@@ -142,8 +142,8 @@ const handleMessageBoxClick = (event) => {
   showMessage.value = false;
 };
 </script>
-
-<style scoped>
+  
+  <style scoped>
 /* 样式部分保持不变 */
 .layout {
   min-height: 100vh;
@@ -242,6 +242,11 @@ const handleMessageBoxClick = (event) => {
 .api-key-input :deep(.el-input__inner) {
   color: #666;
   font-size: 13px;
+}
+
+/* 禁止选择占位符文本 */
+.api-key-input :deep(.el-input__inner::placeholder) {
+  user-select: none;
 }
 
 .api-key-input :deep(.el-input__inner::placeholder) {
