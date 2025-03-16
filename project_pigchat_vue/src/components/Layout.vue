@@ -143,7 +143,7 @@ const handleMessageBoxClick = (event) => {
 };
 </script>
   
-  <style scoped>
+<style scoped>
 /* 样式部分保持不变 */
 .layout {
   min-height: 100vh;
@@ -282,6 +282,13 @@ const handleMessageBoxClick = (event) => {
   overflow-y: auto;
   height: calc(100vh - 64px);
   box-sizing: border-box;
+  /* 隐藏滚动条 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.main-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 
 .message-box {
@@ -305,6 +312,13 @@ const handleMessageBoxClick = (event) => {
   overflow-y: auto;
   /* 新增属性，禁止文字选中 */
   user-select: none;
+  /* 隐藏滚动条 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.message-box::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 
 .message-box h3 {
@@ -340,6 +354,13 @@ const handleMessageBoxClick = (event) => {
 
   .main-content {
     height: calc(100vh - 56px);
+    /* 隐藏滚动条 */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  .main-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
   }
 
   .title {
@@ -368,6 +389,13 @@ const handleMessageBoxClick = (event) => {
     padding: 15px;
     /* 新增属性，禁止文字选中 */
     user-select: none;
+    /* 隐藏滚动条 */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  .message-box::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
   }
 }
 </style>
