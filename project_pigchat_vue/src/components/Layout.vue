@@ -302,6 +302,8 @@ const handleMessageBoxClick = (event) => {
   letter-spacing: 0.5px; /* 增加字间距 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
+  /* 新增属性，禁止文字选中 */
+  user-select: none;
 }
 
 .message-box h3 {
@@ -363,6 +365,8 @@ const handleMessageBoxClick = (event) => {
   .message-box {
     top: 56px; /* 小屏幕状态栏高度 */
     padding: 15px;
+    /* 新增属性，禁止文字选中 */
+    user-select: none;
   }
 }
 </style>
