@@ -118,9 +118,11 @@ onMounted(async () => {
   formattedMessages.value = messages.value
     .map(
       (item) => `
-          <h3>${item.title}</h3>
-          <p>${item.content.map((line) => line + "<br>").join("")}</p>
-        `
+            <h3 draggable="false">${item.title}</h3>
+            <p draggable="false">${item.content
+              .map((line) => `<span draggable="false">${line}</span><br>`)
+              .join("")}</p>
+          `
     )
     .join("");
 });
