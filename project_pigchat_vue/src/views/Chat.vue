@@ -174,14 +174,14 @@ const isKeyboardOpen = ref(false);
 const handleFocus = () => {
   isKeyboardOpen.value = true;
   setTimeout(() => {
-    window.scrollTo(0, document.body.scrollHeight);  // 滚动到页面底部，防止遮挡
+    window.scrollTo(0, document.body.scrollHeight); // 滚动到页面底部，防止遮挡
   }, 300);
 };
 
 const handleBlur = () => {
   isKeyboardOpen.value = false;
   setTimeout(() => {
-    window.scrollTo(0, 0);  // 关闭输入框后恢复页面
+    window.scrollTo(0, 0); // 关闭输入框后恢复页面
   }, 300);
 };
 
