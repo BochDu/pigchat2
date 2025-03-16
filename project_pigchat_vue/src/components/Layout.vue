@@ -88,7 +88,7 @@ const messages = ref([
     title: "贡献个人及企业",
     content: [
       "BochDu、quaeast、SyZdog",
-      'SIB集团 <a href="https://sicp.online">https://sicp.online</a>',
+      'SICP集团 <a href="https://sicp.online">https://sicp.online</a>',
     ],
   },
 ]);
